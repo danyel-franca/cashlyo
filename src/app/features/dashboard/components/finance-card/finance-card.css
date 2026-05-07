@@ -1,0 +1,125 @@
+.finance-card {
+
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 24px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.05);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  transition: 0.25s ease;
+}
+
+.finance-card:hover {
+
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 16px 40px rgba(0,0,0,0.08);
+}
+
+.card-top {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+
+  font-size: 15px;
+  color: #6b7280;
+
+  font-weight: 500;
+}
+
+.card-icon {
+
+  width: 52px;
+  height: 52px;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 22px;
+
+  color: white;
+}
+
+.finance-card h2 {
+
+  font-size: 32px;
+  color: #111827;
+
+  font-weight: 700;
+}
+
+.card-growth {
+
+  color: #16a34a;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+/* SALDO */
+
+.finance-card.saldo .card-icon {
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+}
+
+/* ENTRADA */
+
+.finance-card.entrada .card-icon {
+
+  background:
+    linear-gradient(
+      135deg,
+      #16a34a,
+      #15803d
+    );
+}
+
+/* SAIDA */
+
+.finance-card.saida .card-icon {
+
+  background:
+    linear-gradient(
+      135deg,
+      #dc2626,
+      #b91c1c
+    );
+}
+
+.finance-card.saida .card-growth {
+  color: #dc2626;
+}
+
+.finance-card.entrada .card-growth {
+  color: #16a34a;
+}

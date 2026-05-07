@@ -1,0 +1,36 @@
+<div class="chart-container">
+
+  <div class="chart-header">
+
+    <div>
+
+      <h2>
+        Fluxo Financeiro
+      </h2>
+
+      <p>
+        Entradas e saídas dos últimos meses
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <apx-chart
+
+    [series]="chartSeries"
+
+    [chart]="chartDetails"
+
+    [xaxis]="chartXAxis"
+
+    [stroke]="chartStroke"
+
+    [dataLabels]="chartDataLabels"
+
+    [tooltip]="chartTooltip">
+
+  </apx-chart>
+
+</div>

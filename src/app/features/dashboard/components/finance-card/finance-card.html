@@ -1,0 +1,52 @@
+<div
+  class="finance-card"
+  [ngClass]="tipo"
+>
+
+  <div class="card-top">
+
+    <span class="card-title">
+      {{ titulo }}
+    </span>
+
+    <div class="card-icon">
+
+      <span *ngIf="tipo === 'saldo'">
+        💰
+      </span>
+
+      <span *ngIf="tipo === 'entrada'">
+        📈
+      </span>
+
+      <span *ngIf="tipo === 'saida'">
+        📉
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <h2>
+    {{ valor }}
+  </h2>
+
+
+  <p class="card-growth">
+
+    <span *ngIf="tipo === 'entrada'">
+      +12% este mês
+    </span>
+
+    <span *ngIf="tipo === 'saida'">
+      -5% este mês
+    </span>
+
+    <span *ngIf="tipo === 'saldo'">
+      Atualizado hoje
+    </span>
+
+  </p>
+
+</div>
