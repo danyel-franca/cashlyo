@@ -1,0 +1,214 @@
+/* OVERLAY */
+
+.modal-overlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(15, 23, 42, 0.45);
+
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+/* CONTAINER */
+
+.modal-container {
+
+  width: 100%;
+  max-width: 520px;
+
+  background: white;
+
+  border-radius: 28px;
+
+  padding: 32px;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.15);
+
+  animation: modalAnimation 0.25s ease;
+}
+
+/* ANIMATION */
+
+@keyframes modalAnimation {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(20px)
+      scale(0.98);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+/* HEADER */
+
+.modal-header {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 28px;
+}
+
+.modal-header h2 {
+
+  font-size: 28px;
+
+  color: #111827;
+
+  font-weight: 700;
+}
+
+.modal-header p {
+
+  margin-top: 6px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+/* CLOSE */
+
+.close-button {
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: #f3f4f6;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  transition: 0.2s ease;
+}
+
+.close-button:hover {
+
+  background: #e5e7eb;
+}
+
+/* FORM */
+
+.modal-form {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+/* GROUP */
+
+.form-group {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.form-group label {
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #374151;
+}
+
+/* INPUTS */
+
+.form-group input,
+.form-group select {
+
+  height: 52px;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 16px;
+
+  padding: 0 16px;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition: 0.2s ease;
+
+  background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,0.12);
+}
+
+/* BUTTON */
+
+.save-button {
+
+  margin-top: 12px;
+
+  height: 54px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  box-shadow:
+    0 10px 24px rgba(37,99,235,0.25);
+}
+
+.save-button:hover {
+
+  transform: translateY(-2px);
+}

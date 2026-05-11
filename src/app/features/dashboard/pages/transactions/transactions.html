@@ -1,0 +1,64 @@
+<div class="transactions-page">
+  <div class="transactions-top">
+    <div>
+      <h1>Transações</h1>
+
+      <p>Gerencie suas entradas e saídas financeiras</p>
+    </div>
+
+    <button (click)="openModal()">+ Nova Transação</button>
+  </div>
+
+  <div class="transactions-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Descrição</th>
+          <th>Categoria</th>
+          <th>Valor</th>
+          <th>Data</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>
+            <div class="type-badge" [ngClass]="transaction.tipo">
+              <span *ngIf="transaction.tipo === 'entrada'"> 📈 </span>
+
+              <span *ngIf="transaction.tipo === 'saida'"> 📉 </span>
+
+              {{ transaction.tipo }}
+            </div>
+          </td>
+
+          <td>
+            {{ transaction.descricao }}
+          </td>
+
+          <td>
+            {{ transaction.categoria }}
+          </td>
+
+          <td [ngClass]="transaction.tipo" class="transaction-value">
+            {{ transaction.valor }}
+          </td>
+
+          <td>
+            {{ transaction.data }}
+          </td>
+
+          <td>
+            <span class="status-badge" [ngClass]="transaction.status.toLowerCase()">
+              {{ transaction.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-transaction-modal *ngIf="isModalOpen" (close)="closeModal()"> </app-transaction-modal>

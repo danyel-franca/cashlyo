@@ -1,0 +1,67 @@
+<div class="modal-overlay">
+  <div class="modal-container">
+    <!-- HEADER -->
+
+    <div class="modal-header">
+      <div>
+        <h2>Nova Transação</h2>
+
+        <p>Adicione uma nova movimentação financeira</p>
+      </div>
+
+      <button class="close-button" (click)="closeModal()">✕</button>
+    </div>
+
+    <!-- FORM -->
+
+    <form class="modal-form">
+      <!-- DESCRIÇÃO -->
+
+      <div class="form-group">
+        <label> Descrição </label>
+
+        <input type="text" placeholder="Ex: Salário, Mercado..." />
+      </div>
+
+      <!-- VALOR -->
+
+      <div class="form-group">
+        <label> Valor </label>
+
+        <input type="number" placeholder="R$ 0,00" />
+      </div>
+
+      <!-- TIPO -->
+
+      <div class="form-group">
+        <label> Tipo </label>
+
+        <select>
+          <option>Entrada</option>
+
+          <option>Saída</option>
+        </select>
+      </div>
+
+      <!-- CATEGORIA -->
+
+      <div class="form-group">
+        <label> Categoria </label>
+
+        <input type="text" placeholder="Ex: Trabalho" />
+      </div>
+
+      <!-- DATA -->
+
+      <div class="form-group">
+        <label> Data </label>
+
+        <input type="date" />
+      </div>
+
+      <!-- BUTTON -->
+
+      <button type="submit" class="save-button">Salvar Transação</button>
+    </form>
+  </div>
+</div>
