@@ -9,6 +9,30 @@
     <button (click)="openModal()">+ Nova Transação</button>
   </div>
 
+  <div class="transactions-actions">
+    <!-- SEARCH -->
+
+    <div class="search-box">
+      <span> 🔍 </span>
+
+      <input type="text" placeholder="Pesquisar transações..." [(ngModel)]="searchTerm" />
+    </div>
+
+    <!-- FILTERS -->
+
+    <div class="filters">
+      <select [(ngModel)]="selectedFilter">
+        <option value="Todos">Todos</option>
+
+        <option value="entrada">Entradas</option>
+
+        <option value="saida">Saídas</option>
+      </select>
+
+      <button>⬇ Exportar</button>
+    </div>
+  </div>
+
   <div class="transactions-table">
     <table>
       <thead>
@@ -19,11 +43,12 @@
           <th>Valor</th>
           <th>Data</th>
           <th>Status</th>
+          <th>Ações</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr *ngFor="let transaction of transactions">
+        <tr *ngFor="let transaction of filteredTransactions">
           <td>
             <div class="type-badge" [ngClass]="transaction.tipo">
               <span *ngIf="transaction.tipo === 'entrada'"> 📈 </span>
@@ -55,10 +80,31 @@
               {{ transaction.status }}
             </span>
           </td>
+          <td>
+            <div class="actions">
+              <button class="edit-button" (click)="editTransaction(transaction)">✏️</button>
+
+              <button class="delete-button" (click)="deleteTransaction(transaction)">🗑️</button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<app-transaction-modal *ngIf="isModalOpen" (close)="closeModal()"> </app-transaction-modal>
+<app-transaction-modal
+  *ngIf="isModalOpen"
+  [transactionData]="editingTransaction"
+  (close)="closeModal()"
+  (save)="addTransaction($event)"
+>
+</app-transaction-modal>
+
+<app-confirm-modal
+  *ngIf="isConfirmModalOpen"
+  [transactionName]="transactionToDelete?.descricao"
+  (close)="closeConfirmModal()"
+  (confirm)="confirmDelete()"
+>
+</app-confirm-modal>

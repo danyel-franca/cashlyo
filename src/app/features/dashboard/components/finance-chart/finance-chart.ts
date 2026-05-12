@@ -1,107 +1,122 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {
-  NgApexchartsModule,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexStroke,
-  ApexDataLabels,
-  ApexTooltip
-}
-from 'ng-apexcharts';
+import { ApexChart, ApexNonAxisChartSeries, ApexResponsive } from 'ng-apexcharts';
 
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({
   selector: 'app-finance-chart',
+
   standalone: true,
 
-  imports: [
-    NgApexchartsModule
-  ],
+  imports: [NgApexchartsModule],
 
   templateUrl: './finance-chart.html',
-  styleUrl: './finance-chart.css'
+
+  styleUrls: ['./finance-chart.css'],
 })
+export class FinanceChartComponent implements OnInit {
+  // SERIES
 
-export class FinanceChartComponent {
+  public chartSeries: ApexNonAxisChartSeries = [];
 
-  public chartSeries: ApexAxisChartSeries = [
-    {
-      name: 'Entradas',
+  // LABELS
 
-      data: [
-        3200,
-        4500,
-        3900,
-        5800,
-        6200,
-        7600
-      ]
-    },
+  public chartLabels: string[] = ['Entradas', 'Saídas'];
 
-    {
-      name: 'Saídas',
-
-      data: [
-        1200,
-        1800,
-        1600,
-        2400,
-        2100,
-        3200
-      ]
-    }
-  ];
-
-
+  // CHART
 
   public chartDetails: ApexChart = {
-
-    type: 'area',
+    type: 'donut',
 
     height: 350,
 
     toolbar: {
-      show: false
-    }
+      show: false,
+    },
   };
 
+  // RESPONSIVE
 
+  public chartResponsive: ApexResponsive[] = [
+    {
+      breakpoint: 480,
 
-  public chartXAxis: ApexXAxis = {
+      options: {
+        chart: {
+          width: 300,
+        },
 
-    categories: [
-      'Jan',
-      'Fev',
-      'Mar',
-      'Abr',
-      'Mai',
-      'Jun'
-    ]
-  };
+        legend: {
+          position: 'bottom',
+        },
+      },
+    },
+  ];
 
+  // TOTALS
 
+  totalIncome = 0;
 
-  public chartStroke: ApexStroke = {
+  totalExpense = 0;
 
-    curve: 'smooth',
+  // INIT
 
-    width: 4
-  };
+  ngOnInit(): void {
+    const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
 
+    this.calculateChartData(transactions);
+  }
 
+  // CALCULATE DATA
 
-  public chartDataLabels: ApexDataLabels = {
+  calculateChartData(transactions: any[]) {
+    // ENTRADAS
 
-    enabled: false
-  };
+    this.totalIncome = transactions
 
+      .filter((transaction) => transaction.tipo === 'entrada')
 
+      .reduce(
+        (total, transaction) =>
+          total +
+          Number(
+            transaction.valor
 
-  public chartTooltip: ApexTooltip = {
+              .replace('R$', '')
 
-    theme: 'light'
-  };
+              .replace('+', '')
 
+              .trim(),
+          ),
+
+        0,
+      );
+
+    // SAIDAS
+
+    this.totalExpense = transactions
+
+      .filter((transaction) => transaction.tipo === 'saida')
+
+      .reduce(
+        (total, transaction) =>
+          total +
+          Number(
+            transaction.valor
+
+              .replace('R$', '')
+
+              .replace('-', '')
+
+              .trim(),
+          ),
+
+        0,
+      );
+
+    // CHART
+
+    this.chartSeries = [this.totalIncome, this.totalExpense];
+  }
 }

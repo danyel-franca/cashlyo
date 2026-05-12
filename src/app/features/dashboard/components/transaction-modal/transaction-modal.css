@@ -212,3 +212,76 @@
 
   transform: translateY(-2px);
 }
+
+/* ACTIONS */
+
+.transactions-actions {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 18px;
+}
+
+/* SEARCH */
+
+.transactions-actions input {
+
+  flex: 1;
+
+  height: 54px;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 18px;
+
+  padding: 0 18px;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.transactions-actions input:focus {
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,0.12);
+}
+
+/* SELECT */
+
+.transactions-actions select {
+
+  width: 180px;
+
+  height: 54px;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 18px;
+
+  padding: 0 16px;
+
+  font-size: 14px;
+
+  outline: none;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.transactions-actions select:focus {
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,0.12);
+}

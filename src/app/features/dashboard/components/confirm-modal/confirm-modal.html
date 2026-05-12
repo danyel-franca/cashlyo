@@ -1,0 +1,27 @@
+<div class="confirm-overlay">
+  <div class="confirm-container">
+    <!-- ICON -->
+
+    <div class="warning-icon">⚠️</div>
+
+    <!-- CONTENT -->
+
+    <h2>Confirmar exclusão</h2>
+
+    <p>
+      Tem certeza que deseja deletar
+
+      <strong> "{{ transactionName }}" </strong>
+
+      ? Esta ação não poderá ser desfeita.
+    </p>
+
+    <!-- ACTIONS -->
+
+    <div class="confirm-actions">
+      <button class="cancel-button" (click)="closeModal()">Cancelar</button>
+
+      <button class="delete-button" (click)="confirmDelete()">Deletar</button>
+    </div>
+  </div>
+</div>
