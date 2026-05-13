@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -6,24 +6,31 @@ import { CommonModule } from '@angular/common';
   selector: 'app-recent-transactions',
   standalone: true,
 
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
 
   templateUrl: './recent-transactions.html',
-  styleUrl: './recent-transactions.css'
+  styleUrl: './recent-transactions.css',
 })
+export class RecentTransactionsComponent implements OnInit {
+  recentTransactions: any[] = [];
 
-export class RecentTransactionsComponent {
+  ngOnInit(): void {
+    const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+
+    this.recentTransactions = transactions
+
+      .slice(-5)
+
+      .reverse();
+  }
 
   transactions = [
-
     {
       tipo: 'entrada',
       descricao: 'Salário',
       categoria: 'Trabalho',
       valor: '+ R$ 5.000',
-      data: 'Hoje'
+      data: 'Hoje',
     },
 
     {
@@ -31,7 +38,7 @@ export class RecentTransactionsComponent {
       descricao: 'Netflix',
       categoria: 'Assinatura',
       valor: '- R$ 39',
-      data: 'Ontem'
+      data: 'Ontem',
     },
 
     {
@@ -39,7 +46,7 @@ export class RecentTransactionsComponent {
       descricao: 'Mercado',
       categoria: 'Alimentação',
       valor: '- R$ 420',
-      data: '2 dias atrás'
+      data: '2 dias atrás',
     },
 
     {
@@ -47,9 +54,7 @@ export class RecentTransactionsComponent {
       descricao: 'Freelance',
       categoria: 'Projetos',
       valor: '+ R$ 850',
-      data: '3 dias atrás'
-    }
-
+      data: '3 dias atrás',
+    },
   ];
-
 }
