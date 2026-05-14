@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TransactionModal } from '../../components/transaction-modal/transaction-modal';
 import { ConfirmModal } from '../../components/confirm-modal/confirm-modal';
+import { TransactionService } from '../../../../services/transaction';
+import { ToastComponent } from '../../../../shared/components/toast/toast';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
 
-  imports: [CommonModule, TransactionModal, ConfirmModal, FormsModule],
+  imports: [CommonModule, TransactionModal, ConfirmModal, FormsModule, ToastComponent],
 
   templateUrl: './transactions.html',
   styleUrl: './transactions.css',
@@ -50,20 +52,24 @@ export class TransactionsComponent implements OnInit {
     };
 
     if (this.editingTransaction) {
-      const index = this.transactions.indexOf(this.editingTransaction);
+      const index = this.transactions.findIndex(
+        (item) =>
+          item.descricao === this.editingTransaction.descricao &&
+          item.data === this.editingTransaction.data,
+      );
 
       this.transactions[index] = formattedTransaction;
     } else {
       this.transactions.unshift(formattedTransaction);
     }
 
-    localStorage.setItem(
-      'transactions',
-
-      JSON.stringify(this.transactions),
-    );
+    this.transactionService.updateTransactions(this.transactions);
 
     this.editingTransaction = null;
+
+    this.showToast(
+      this.editingTransaction ? 'Transação atualizada com sucesso' : 'Transação criada com sucesso',
+    );
   }
 
   deleteTransaction(transaction: any) {
@@ -73,15 +79,23 @@ export class TransactionsComponent implements OnInit {
   }
 
   confirmDelete() {
-    this.transactions = this.transactions.filter((item) => item !== this.transactionToDelete);
-
-    localStorage.setItem(
-      'transactions',
-
-      JSON.stringify(this.transactions),
+    this.transactions = this.transactions.filter(
+      (item) =>
+        !(
+          item.descricao === this.transactionToDelete.descricao &&
+          item.data === this.transactionToDelete.data
+        ),
     );
 
+    this.transactionService.updateTransactions(this.transactions);
+
     this.closeConfirmModal();
+
+    this.showToast(
+      'Transação deletada com sucesso',
+
+      'error',
+    );
   }
 
   closeConfirmModal() {
@@ -149,10 +163,32 @@ export class TransactionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const savedTransactions = localStorage.getItem('transactions');
+    this.transactionService.transactions$.subscribe((transactions) => {
+      this.transactions = transactions;
+    });
+  }
 
-    if (savedTransactions) {
-      this.transactions = JSON.parse(savedTransactions);
-    }
+  constructor(private transactionService: TransactionService) {}
+
+  toastVisible = false;
+
+  toastMessage = '';
+
+  toastType = 'success';
+
+  showToast(
+    message: string,
+
+    type = 'success',
+  ) {
+    this.toastMessage = message;
+
+    this.toastType = type;
+
+    this.toastVisible = true;
+
+    setTimeout(() => {
+      this.toastVisible = false;
+    }, 3000);
   }
 }

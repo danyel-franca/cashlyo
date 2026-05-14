@@ -3,8 +3,11 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-transaction-modal',
+
   imports: [FormsModule],
+
   templateUrl: './transaction-modal.html',
+
   styleUrl: './transaction-modal.css',
 })
 export class TransactionModal implements OnChanges {
@@ -44,7 +47,11 @@ export class TransactionModal implements OnChanges {
       this.newTransaction = {
         ...this.transactionData,
 
-        valor: this.transactionData.valor.replace('+ R$ ', '').replace('- R$ ', ''),
+        valor: this.transactionData.valor
+
+          .replace('+ R$ ', '')
+
+          .replace('- R$ ', ''),
       };
     }
   }

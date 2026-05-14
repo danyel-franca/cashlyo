@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { TransactionService } from '../../../../services/transaction';
 
 @Component({
   selector: 'app-recent-transactions',
@@ -12,16 +13,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './recent-transactions.css',
 })
 export class RecentTransactionsComponent implements OnInit {
+  constructor(private transactionService: TransactionService) {}
+
   recentTransactions: any[] = [];
 
   ngOnInit(): void {
-    const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+    this.transactionService.transactions$.subscribe((transactions) => {
+      this.recentTransactions = transactions
 
-    this.recentTransactions = transactions
+        .slice(-5)
 
-      .slice(-5)
-
-      .reverse();
+        .reverse();
+    });
   }
 
   transactions = [
