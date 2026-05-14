@@ -114,4 +114,4 @@ http://localhost:4200
 
 ## Status
 
-Em desenvolvim
+Em desenvolvimento
