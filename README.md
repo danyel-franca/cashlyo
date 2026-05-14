@@ -1,117 +1,91 @@
-# Cashlyo
+Cashlyo
 
-Dashboard moderno de gerenciamento financeiro focado em performance, usabilidade e visualização financeira em tempo real.
+Modern financial management dashboard focused on performance, usability, and real-time financial visualization.
 
-## Visão Geral
+Overview
 
-Cashlyo é uma plataforma de gestão financeira inspirada em produtos SaaS modernos, desenvolvida para entregar uma experiência profissional de dashboard financeiro. O projeto foi criado com foco em experiência do usuário, arquitetura frontend escalável e visualização inteligente de dados financeiros.
+Cashlyo is a financial management platform inspired by modern SaaS products, developed to deliver a professional financial dashboard experience. The project was created with a strong focus on user experience, scalable frontend architecture, and intelligent financial data visualization.
 
-A aplicação permite gerenciar transações, acompanhar fluxo financeiro, visualizar entradas e saídas através de gráficos dinâmicos e interagir com um ambiente moderno e organizado.
+The application allows users to manage transactions, monitor financial flow, visualize income and expenses through dynamic charts, and interact with a modern and organized environment.
 
-## Funcionalidades
+Features
+Real-time financial dashboard
+Dynamic balance calculation
+Income and expense management
+Interactive financial charts
+Recent transactions system
+Transaction filtering
+Transaction editing and deletion
+Confirmation modal for critical actions
+Reusable modal architecture
+Responsive dashboard layout
+Component-based architecture
+Data persistence using Local Storage
+Technologies
+Frontend
+Angular 20
+TypeScript
+HTML5
+CSS3
+ApexCharts
+Planned Backend Stack
+Spring Boot
+PostgreSQL / MySQL
+JWT Authentication
+REST API
+Architecture
 
-* Dashboard financeiro em tempo real
-* Cálculo dinâmico de saldo
-* Gerenciamento de entradas e saídas
-* Gráficos financeiros interativos
-* Sistema de transações recentes
-* Filtros de transações
-* Edição e exclusão de transações
-* Modal de confirmação para ações críticas
-* Arquitetura reutilizável de modais
-* Layout responsivo de dashboard
-* Arquitetura baseada em componentes
-* Persistência de dados com Local Storage
+Cashlyo follows a modular component-oriented architecture using Angular Standalone Components. The project structure prioritizes scalability, organization, and separation of responsibilities.
 
-## Tecnologias
+Implemented architectural concepts:
 
-### Frontend
+Reusable components
+Shared state management strategy
+Modular page structure
+Dynamic data rendering
+Service-oriented frontend organization
+Scalable dashboard layout
+Dashboard Experience
 
-* Angular 20
-* TypeScript
-* HTML5
-* CSS3
-* ApexCharts
+The dashboard was designed to simulate the experience of modern fintech platforms and SaaS products. The interface prioritizes:
 
-### Stack Backend Planejada
+Fast information readability
+Minimalist visual hierarchy
+Clean and objective financial overview
+Smooth interactions
+Real-time visual feedback
+Project Goals
 
-* Spring Boot
-* PostgreSQL / MySQL
-* JWT Authentication
-* REST API
+Cashlyo was developed as a portfolio-level fullstack financial platform focused on:
 
-## Arquitetura
+Modern frontend architecture
+Professional UI/UX principles
+Scalable application structure
+Financial data visualization
+Experience close to real-world market products
+Future Improvements
 
-Cashlyo segue uma arquitetura modular orientada a componentes utilizando Angular Standalone Components. A estrutura do projeto prioriza escalabilidade, organização e separação de responsabilidades.
+Planned features for future versions:
 
-Conceitos arquiteturais implementados:
-
-* Componentes reutilizáveis
-* Estratégia de gerenciamento de estado compartilhado
-* Estrutura modular de páginas
-* Renderização dinâmica de dados
-* Organização frontend orientada a serviços
-* Layout escalável de dashboard
-
-## Experiência da Dashboard
-
-A dashboard foi projetada para simular a experiência de plataformas fintech e produtos SaaS modernos. A interface prioriza:
-
-* Leitura rápida de informações
-* Hierarquia visual minimalista
-* Visão financeira limpa e objetiva
-* Interações fluidas
-* Feedback visual em tempo real
-
-## Objetivos do Projeto
-
-Cashlyo foi desenvolvido como uma plataforma financeira fullstack de nível portfólio, com foco em:
-
-* Arquitetura frontend moderna
-* Princípios profissionais de UI/UX
-* Estrutura escalável de aplicação
-* Visualização de dados financeiros
-* Experiência próxima de produtos reais de mercado
-
-## Melhorias Futuras
-
-Funcionalidades planejadas para próximas versões:
-
-* Integração completa com backend
-* Sistema de autenticação de usuários
-* Persistência em banco de dados
-* Página avançada de análises financeiras
-* Relatórios de fluxo financeiro
-* Área de perfil do usuário
-* Dark Mode
-* Responsividade mobile avançada
-* Deploy em nuvem
-* Suporte multiusuário
-
-## Instalação
-
-```bash
+Full backend integration
+User authentication system
+Database persistence
+Advanced financial analytics page
+Financial flow reports
+User profile area
+Dark Mode
+Advanced mobile responsiveness
+Cloud deployment
+Multi-user support
+Installation
 git clone https://github.com/your-username/cashlyo.git
-```
-
-```bash
 cd cashlyo
-```
-
-```bash
 npm install
-```
-
-```bash
 ng serve
-```
 
-Aplicação disponível em:
+Application available at:
 
-```bash
 http://localhost:4200
-```
+Status
 
-## Status
-
-Em desenvolvimento
+Currently under active development.
