@@ -90,13 +90,13 @@ Planned features for future versions:
 
 ## Installation
 
-- git clone https://github.com/your-username/cashlyo.git
+- git clone 'https://github.com/your-username/cashlyo.git'
 - cd cashlyo
 - npm install
 - ng serve
 
 Application available at:
-- http://localhost:4200
+- 'http://localhost:4200'
 
 ## Status
 Currently under active development
