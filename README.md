@@ -100,3 +100,6 @@ Application available at:
 
 ## Status
 Currently under active development
+
+## Author
+Developed by Danyel França and Emanuel Ribeiro
