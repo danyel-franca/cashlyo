@@ -16,15 +16,10 @@ import { NgApexchartsModule } from 'ng-apexcharts';
   styleUrls: ['./finance-chart.css'],
 })
 export class FinanceChartComponent implements OnInit {
-  // SERIES
 
   public chartSeries: ApexNonAxisChartSeries = [];
 
-  // LABELS
-
   public chartLabels: string[] = ['Entradas', 'Saídas'];
-
-  // CHART
 
   public chartDetails: ApexChart = {
     type: 'donut',
@@ -34,9 +29,16 @@ export class FinanceChartComponent implements OnInit {
     toolbar: {
       show: false,
     },
+
   };
 
-  // RESPONSIVE
+  public chartColors = [
+
+  '#3b82f6',
+
+  '#ef4444'
+
+];
 
   public chartResponsive: ApexResponsive[] = [
     {
@@ -54,13 +56,9 @@ export class FinanceChartComponent implements OnInit {
     },
   ];
 
-  // TOTALS
-
   totalIncome = 0;
 
   totalExpense = 0;
-
-  // INIT
 
   ngOnInit(): void {
     const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
@@ -68,10 +66,7 @@ export class FinanceChartComponent implements OnInit {
     this.calculateChartData(transactions);
   }
 
-  // CALCULATE DATA
-
   calculateChartData(transactions: any[]) {
-    // ENTRADAS
 
     this.totalIncome = transactions
 
@@ -93,8 +88,6 @@ export class FinanceChartComponent implements OnInit {
         0,
       );
 
-    // SAIDAS
-
     this.totalExpense = transactions
 
       .filter((transaction) => transaction.tipo === 'saida')
@@ -114,8 +107,6 @@ export class FinanceChartComponent implements OnInit {
 
         0,
       );
-
-    // CHART
 
     this.chartSeries = [this.totalIncome, this.totalExpense];
   }
