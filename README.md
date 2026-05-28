@@ -56,9 +56,9 @@ Modern dashboard interface for:
 - RxJS
 
 ### Planned Backend
+- Java
 - Spring Boot
 - PostgreSQL / MySQL
-- JWT Authentication
 - REST API
 
 ---
