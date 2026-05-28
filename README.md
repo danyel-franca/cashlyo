@@ -1,105 +1,126 @@
 # Cashlyo
 
-Modern financial management dashboard focused on performance, usability, and real-time financial visualization.
+Cashlyo is a modern financial management dashboard inspired by real-world fintech and SaaS platforms. The project was designed to deliver a professional user experience focused on financial visualization, transaction management, scalability, and frontend architecture.
 
-## Overview
+## Preview
 
-Cashlyo is a financial management platform inspired by modern SaaS products, developed to deliver a professional financial dashboard experience. The project was created with a strong focus on user experience, scalable frontend architecture, and intelligent financial data visualization.
+Modern dashboard interface for:
+- Financial overview
+- Income and expense tracking
+- Real-time transaction visualization
+- Dynamic financial analytics
+- Responsive and scalable user experience
 
-The application allows users to manage transactions, monitor financial flow, visualize income and expenses through dynamic charts, and interact with a modern and organized environment.
+---
 
 ## Features
 
-- Real-time financial dashboard
-- Dynamic balance calculation
-- Income and expense management
-- Interactive financial charts
-- Recent transactions system
+### Financial Dashboard
+- Real-time balance overview
+- Income and expense cards
+- Dynamic financial charts
+- Recent transactions section
+
+### Transaction Management
+- Create transactions
+- Edit transactions
+- Delete transactions
 - Transaction filtering
-- Transaction editing and deletion
-- Confirmation modal for critical actions
+- Dynamic search system
+- Confirmation modal for destructive actions
+
+### User Experience
 - Reusable modal architecture
-- Responsive dashboard layout
-- Component-based architecture
-- Data persistence using Local Storage
+- Toast notification system
+- Real-time UI updates
+- Reactive state management
+- Clean dashboard layout
+- Modern SaaS-inspired interface
+
+### Data Management
+- Local Storage persistence
+- Shared state synchronization
+- Reactive transaction updates
+- Dynamic financial calculations
+
+---
 
 ## Technologies
 
 ### Frontend
-
 - Angular 20
 - TypeScript
 - HTML5
 - CSS3
 - ApexCharts
+- RxJS
 
-### Planned Backend Stack
-
+### Planned Backend
 - Spring Boot
 - PostgreSQL / MySQL
 - JWT Authentication
 - REST API
 
+---
+
 ## Architecture
 
-Cashlyo follows a modular component-oriented architecture using Angular Standalone Components. The project structure prioritizes scalability, organization, and separation of responsibilities.
+Cashlyo follows a modular and component-based architecture using Angular Standalone Components.
 
-Implemented architectural concepts:
+The project structure focuses on:
+- Scalability
+- Reusability
+- Clean code organization
+- Separation of responsibilities
+- Reactive frontend architecture
 
-- Reusable components
-- Shared state management strategy
-- Modular page structure
-- Dynamic data rendering
-- Service-oriented frontend organization
-- Scalable dashboard layout
+### Architectural Concepts
+- Standalone Components
+- Shared State Management
+- Reactive Data Flow
+- Reusable Components
+- Service-Oriented Structure
+- Dynamic Rendering
+- Modular Layout System
+
+---
 
 ## Dashboard Experience
 
-The dashboard was designed to simulate the experience of modern fintech platforms and SaaS products. The interface prioritizes:
+The dashboard was designed to simulate the experience of modern fintech applications and enterprise SaaS platforms.
 
+The interface prioritizes:
 - Fast information readability
-- Minimalist visual hierarchy
-- Clean and objective financial overview
-- Smooth interactions
-- Real-time visual feedback
+- Clean visual hierarchy
+- Real-time interaction feedback
+- Smooth user experience
+- Financial clarity and accessibility
 
-## Project Goals
-
-Cashlyo was developed as a portfolio-level fullstack financial platform focused on:
-
-- Modern frontend architecture
-- Professional UI/UX principles
-- Scalable application structure
-- Financial data visualization
-- Experience close to real-world market products
+---
 
 ## Future Improvements
 
 Planned features for future versions:
 
-- Full backend integration
-- User authentication system
+- Backend integration
+- Authentication system
 - Database persistence
-- Advanced financial analytics page
-- Financial flow reports
-- User profile area
-- Dark Mode
-- Advanced mobile responsiveness
+- Financial analytics page
+- Advanced reports
+- User profile system
+- Dark mode
+- Mobile responsiveness improvements
 - Cloud deployment
 - Multi-user support
 
-## Installation
+---
 
-- git clone https://github.com/your-username/cashlyo.git
-- cd cashlyo
-- npm install
-- ng serve
+## Project Status
 
-Application available at:
-- http://localhost:4200
+Currently under active development.
 
-## Status
-Currently under active development
+---
 
 ## Author
-Developed by Danyel França and Emanuel Ribeiro
+
+Developed by Danyel França
