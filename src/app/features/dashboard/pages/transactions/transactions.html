@@ -13,7 +13,7 @@
     <!-- SEARCH -->
 
     <div class="search-box">
-      <span> 🔍 </span>
+      <span>🔍</span>
 
       <input type="text" placeholder="Pesquisar transações..." [(ngModel)]="searchTerm" />
     </div>
@@ -38,17 +38,25 @@
       <thead>
         <tr>
           <th>Tipo</th>
+
           <th>Descrição</th>
+
           <th>Categoria</th>
+
           <th>Valor</th>
+
           <th>Data</th>
+
           <th>Status</th>
+
           <th>Ações</th>
         </tr>
       </thead>
 
       <tbody>
         <tr *ngFor="let transaction of filteredTransactions">
+          <!-- TIPO -->
+
           <td>
             <div class="type-badge" [ngClass]="transaction.tipo">
               <span *ngIf="transaction.tipo === 'entrada'"> 📈 </span>
@@ -59,27 +67,48 @@
             </div>
           </td>
 
+          <!-- DESCRIÇÃO -->
+
           <td>
             {{ transaction.descricao }}
           </td>
+
+          <!-- CATEGORIA -->
 
           <td>
             {{ transaction.categoria }}
           </td>
 
-          <td [ngClass]="transaction.tipo" class="transaction-value">
-            {{ transaction.valor }}
+          <!-- VALOR -->
+
+          <td
+            class="transaction-value"
+            [ngClass]="{
+              income: transaction.tipo === 'entrada',
+              expense: transaction.tipo === 'saida',
+            }"
+          >
+            {{ transaction.tipo === 'entrada' ? '+' : '-' }}
+
+            {{ transaction.valor | currency: 'BRL' : 'symbol' : '1.2-2' }}
           </td>
+
+          <!-- DATA -->
 
           <td>
             {{ transaction.data }}
           </td>
+
+          <!-- STATUS -->
 
           <td>
             <span class="status-badge" [ngClass]="transaction.status.toLowerCase()">
               {{ transaction.status }}
             </span>
           </td>
+
+          <!-- ACTIONS -->
+
           <td>
             <div class="actions">
               <button class="edit-button" (click)="editTransaction(transaction)">✏️</button>
@@ -103,7 +132,7 @@
 
 <app-confirm-modal
   *ngIf="isConfirmModalOpen"
-  [transactionName]="transactionToDelete?.descricao"
+  [transactionName]="transactionToDelete?.descricao || ''"
   (close)="closeConfirmModal()"
   (confirm)="confirmDelete()"
 >

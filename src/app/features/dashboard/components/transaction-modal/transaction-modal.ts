@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-transaction-modal',
 
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
 
   templateUrl: './transaction-modal.html',
 
@@ -41,6 +42,14 @@ export class TransactionModal implements OnChanges {
 
     data: '',
   };
+
+  incomeCategories = ['Trabalho', 'Investimentos', 'Freelance', 'Salário', 'Vendas'];
+
+  expenseCategories = ['Alimentação', 'Transporte', 'Saúde', 'Lazer', 'Educação', 'Moradia'];
+
+  get filteredCategories() {
+    return this.newTransaction.tipo === 'entrada' ? this.incomeCategories : this.expenseCategories;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactionData'] && this.transactionData) {

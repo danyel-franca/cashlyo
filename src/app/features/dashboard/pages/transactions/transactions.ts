@@ -1,90 +1,115 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
+
+import { FormsModule } from '@angular/forms';
+
 import { TransactionModal } from '../../components/transaction-modal/transaction-modal';
+
 import { ConfirmModal } from '../../components/confirm-modal/confirm-modal';
-import { TransactionService } from '../../../../services/transaction';
+
 import { ToastComponent } from '../../../../shared/components/toast/toast';
+
+import { TransactionService } from '../../../../services/transaction';
+
+import { Transaction } from '../../../../core/models/transaction.model';
 
 @Component({
   selector: 'app-transactions',
+
   standalone: true,
 
-  imports: [CommonModule, TransactionModal, ConfirmModal, FormsModule, ToastComponent],
+  imports: [CommonModule, FormsModule, TransactionModal, ConfirmModal, ToastComponent],
 
   templateUrl: './transactions.html',
+
   styleUrl: './transactions.css',
 })
+
 export class TransactionsComponent implements OnInit {
+  constructor(private transactionService: TransactionService) {}
+
   isModalOpen = false;
 
-  editingTransaction: any = null;
-
   isConfirmModalOpen = false;
-
-  transactionToDelete: any = null;
 
   searchTerm = '';
 
   selectedFilter = 'Todos';
 
-  openModal() {
+  editingTransaction: Transaction | null = null;
+
+  transactionToDelete: Transaction | null = null;
+
+  transactions: Transaction[] = [];
+
+  toastVisible = false;
+
+  toastMessage = '';
+
+  toastType = 'success';
+
+  ngOnInit(): void {
+    this.transactionService.transactions$.subscribe((transactions) => {
+      this.transactions = transactions;
+    });
+  }
+
+  openModal(): void {
     this.isModalOpen = true;
   }
 
-  closeModal() {
+  closeModal(): void {
     this.isModalOpen = false;
 
     this.editingTransaction = null;
   }
 
-  addTransaction(transaction: any) {
-    const formattedTransaction = {
+  addTransaction(transaction: Transaction): void {
+    const formattedTransaction: Transaction = {
       ...transaction,
 
-      tipo: transaction.tipo,
+      id: this.editingTransaction ? this.editingTransaction.id : Date.now(),
 
-      valor:
-        transaction.tipo === 'entrada' ? `+ R$ ${transaction.valor}` : `- R$ ${transaction.valor}`,
+      valor: Number(transaction.valor),
 
       status: 'Concluído',
     };
 
     if (this.editingTransaction) {
-      const index = this.transactions.findIndex(
-        (item) =>
-          item.descricao === this.editingTransaction.descricao &&
-          item.data === this.editingTransaction.data,
+      this.transactions = this.transactions.map((item) =>
+        item.id === this.editingTransaction?.id ? formattedTransaction : item,
       );
 
-      this.transactions[index] = formattedTransaction;
+      this.showToast('Transação atualizada com sucesso');
     } else {
       this.transactions.unshift(formattedTransaction);
+
+      this.showToast('Transação criada com sucesso');
     }
 
     this.transactionService.updateTransactions(this.transactions);
 
-    this.editingTransaction = null;
-
-    this.showToast(
-      this.editingTransaction ? 'Transação atualizada com sucesso' : 'Transação criada com sucesso',
-    );
+    this.closeModal();
   }
 
-  deleteTransaction(transaction: any) {
+  editTransaction(transaction: Transaction): void {
+    this.editingTransaction = transaction;
+
+    this.isModalOpen = true;
+  }
+
+  deleteTransaction(transaction: Transaction): void {
     this.transactionToDelete = transaction;
 
     this.isConfirmModalOpen = true;
   }
 
-  confirmDelete() {
+  confirmDelete(): void {
+    if (!this.transactionToDelete) return;
+
     this.transactions = this.transactions.filter(
-      (item) =>
-        !(
-          item.descricao === this.transactionToDelete.descricao &&
-          item.data === this.transactionToDelete.data
-        ),
+      (transaction) => transaction.id !== this.transactionToDelete?.id,
     );
 
     this.transactionService.updateTransactions(this.transactions);
@@ -98,61 +123,16 @@ export class TransactionsComponent implements OnInit {
     );
   }
 
-  closeConfirmModal() {
+  closeConfirmModal(): void {
     this.isConfirmModalOpen = false;
 
     this.transactionToDelete = null;
   }
 
-  editTransaction(transaction: any) {
-    this.editingTransaction = transaction;
-
-    this.isModalOpen = true;
-  }
-
-  transactions = [
-    {
-      tipo: 'entrada',
-      descricao: 'Salário',
-      categoria: 'Trabalho',
-      valor: '+ R$ 5.000',
-      data: '07 Mai 2026',
-      status: 'Concluído',
-    },
-
-    {
-      tipo: 'saida',
-      descricao: 'Netflix',
-      categoria: 'Assinatura',
-      valor: '- R$ 39',
-      data: '06 Mai 2026',
-      status: 'Concluído',
-    },
-
-    {
-      tipo: 'saida',
-      descricao: 'Mercado',
-      categoria: 'Alimentação',
-      valor: '- R$ 420',
-      data: '05 Mai 2026',
-      status: 'Pendente',
-    },
-
-    {
-      tipo: 'entrada',
-      descricao: 'Freelance',
-      categoria: 'Projetos',
-      valor: '+ R$ 850',
-      data: '03 Mai 2026',
-      status: 'Concluído',
-    },
-  ];
-
-  get filteredTransactions() {
+  get filteredTransactions(): Transaction[] {
     return this.transactions.filter((transaction) => {
       const matchesSearch = transaction.descricao
         .toLowerCase()
-
         .includes(this.searchTerm.toLowerCase());
 
       const matchesFilter =
@@ -162,25 +142,11 @@ export class TransactionsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.transactionService.transactions$.subscribe((transactions) => {
-      this.transactions = transactions;
-    });
-  }
-
-  constructor(private transactionService: TransactionService) {}
-
-  toastVisible = false;
-
-  toastMessage = '';
-
-  toastType = 'success';
-
   showToast(
     message: string,
 
     type = 'success',
-  ) {
+  ): void {
     this.toastMessage = message;
 
     this.toastType = type;

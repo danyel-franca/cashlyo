@@ -12,23 +12,28 @@
       <button class="close-button" (click)="closeModal()">✕</button>
     </div>
 
-    <!-- FORM -->
-
     <form class="modal-form">
-      <!-- DESCRIÇÃO -->
-
       <div class="form-group">
-        <label> Descrição </label>
+        <label> Tipo </label>
 
-        <input
-          type="text"
-          placeholder="Ex: Salário, Mercado..."
-          [(ngModel)]="newTransaction.descricao"
-          name="descricao"
-        />
+        <select [(ngModel)]="newTransaction.tipo" name="tipo">
+          <option value="entrada">Entrada</option>
+
+          <option value="saida">Saída</option>
+        </select>
       </div>
 
-      <!-- VALOR -->
+      <div class="form-group">
+        <label> Categoria </label>
+
+        <select [(ngModel)]="newTransaction.categoria" name="categoria">
+          <option value="">Selecione uma categoria</option>
+
+          <option *ngFor="let category of filteredCategories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </div>
 
       <div class="form-group">
         <label> Valor </label>
@@ -41,32 +46,16 @@
         />
       </div>
 
-      <!-- TIPO -->
-
       <div class="form-group">
-        <label> Tipo </label>
-
-        <select [(ngModel)]="newTransaction.tipo" name="tipo">
-          <option value="entrada">Entrada</option>
-
-          <option value="saida">Saída</option>
-        </select>
-      </div>
-
-      <!-- CATEGORIA -->
-
-      <div class="form-group">
-        <label> Categoria </label>
+        <label> Descrição </label>
 
         <input
           type="text"
-          placeholder="Ex: Trabalho"
-          [(ngModel)]="newTransaction.categoria"
-          name="categoria"
+          placeholder="Digite a descrição..."
+          [(ngModel)]="newTransaction.descricao"
+          name="descricao"
         />
       </div>
-
-      <!-- DATA -->
 
       <div class="form-group">
         <label> Data </label>
@@ -74,9 +63,9 @@
         <input type="date" [(ngModel)]="newTransaction.data" name="data" />
       </div>
 
-      <!-- BUTTON -->
-
-      <button type="submit" class="save-button" (click)="saveTransaction()">Salvar Transação</button>
+      <button type="submit" class="save-button" (click)="saveTransaction()">
+        Salvar Transação
+      </button>
     </form>
   </div>
 </div>

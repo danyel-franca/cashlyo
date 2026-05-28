@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
+import { Transaction } from '../core/models/transaction.model';
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class TransactionService {
   private transactionsSubject = new BehaviorSubject<any[]>(this.getTransactionsFromStorage());
 
