@@ -58,7 +58,7 @@ Modern dashboard interface for:
 ### Planned Backend
 - Java
 - Spring Boot
-- PostgreSQL / MySQL
+- MySQL
 - REST API
 
 ---
