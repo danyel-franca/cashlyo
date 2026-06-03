@@ -16,11 +16,11 @@ export class ConfirmModal {
   @Input()
   transactionName = '';
 
-  closeModal() {
+  closeModal(): void {
     this.close.emit();
   }
 
-  confirmDelete() {
+  confirmDelete(): void {
     this.confirm.emit();
   }
 }

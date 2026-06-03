@@ -6,19 +6,16 @@
       <p>Gerencie suas entradas e saídas financeiras</p>
     </div>
 
-    <button (click)="openModal()">+ Nova Transação</button>
+    <button type="button" (click)="openModal()">+ Nova Transação</button>
   </div>
 
   <div class="transactions-actions">
-    <!-- SEARCH -->
 
     <div class="search-box">
       <span>🔍</span>
 
       <input type="text" placeholder="Pesquisar transações..." [(ngModel)]="searchTerm" />
     </div>
-
-    <!-- FILTERS -->
 
     <div class="filters">
       <select [(ngModel)]="selectedFilter">
@@ -29,7 +26,7 @@
         <option value="saida">Saídas</option>
       </select>
 
-      <button>⬇ Exportar</button>
+      <button type="button">⬇ Exportar</button>
     </div>
   </div>
 
@@ -55,7 +52,6 @@
 
       <tbody>
         <tr *ngFor="let transaction of filteredTransactions">
-          <!-- TIPO -->
 
           <td>
             <div class="type-badge" [ngClass]="transaction.tipo">
@@ -67,19 +63,13 @@
             </div>
           </td>
 
-          <!-- DESCRIÇÃO -->
-
           <td>
             {{ transaction.descricao }}
           </td>
 
-          <!-- CATEGORIA -->
-
           <td>
             {{ transaction.categoria }}
           </td>
-
-          <!-- VALOR -->
 
           <td
             class="transaction-value"
@@ -93,21 +83,15 @@
             {{ transaction.valor | currency: 'BRL' : 'symbol' : '1.2-2' }}
           </td>
 
-          <!-- DATA -->
-
           <td>
             {{ transaction.data }}
           </td>
-
-          <!-- STATUS -->
 
           <td>
             <span class="status-badge" [ngClass]="transaction.status.toLowerCase()">
               {{ transaction.status }}
             </span>
           </td>
-
-          <!-- ACTIONS -->
 
           <td>
             <div class="actions">

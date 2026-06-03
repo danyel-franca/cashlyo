@@ -8,33 +8,26 @@
   </div>
 
   <div class="transactions-list">
-    <div class="recent-transactions">
-      <div class="header">
-        <h2>Transações Recentes</h2>
+    <div class="transaction-item" *ngFor="let transaction of recentTransactions">
+      <div class="left">
+        <h3>
+          {{ transaction.descricao }}
+        </h3>
+
+        <p>
+          {{ transaction.categoria }}
+        </p>
       </div>
 
-      <div class="transaction-item" *ngFor="let transaction of recentTransactions">
-        <div class="left">
-          <h3>
-            {{ transaction.descricao }}
-          </h3>
-
-          <p>
-            {{ transaction.categoria }}
-          </p>
-        </div>
-
-        <div class="right">
-          <span
-            [ngClass]="{
-              income: transaction.tipo === 'entrada',
-
-              expense: transaction.tipo === 'saida',
-            }"
-          >
-            {{ transaction.valor }}
-          </span>
-        </div>
+      <div class="right">
+        <span
+          [ngClass]="{
+            income: transaction.tipo === 'entrada',
+            expense: transaction.tipo === 'saida',
+          }"
+        >
+          {{ transaction.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
+        </span>
       </div>
     </div>
   </div>

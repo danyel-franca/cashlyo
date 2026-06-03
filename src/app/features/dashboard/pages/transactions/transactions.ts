@@ -25,7 +25,6 @@ import { Transaction } from '../../../../core/models/transaction.model';
 
   styleUrl: './transactions.css',
 })
-
 export class TransactionsComponent implements OnInit {
   constructor(private transactionService: TransactionService) {}
 
@@ -47,7 +46,7 @@ export class TransactionsComponent implements OnInit {
 
   toastMessage = '';
 
-  toastType = 'success';
+  toastType: 'success' | 'error' = 'success';
 
   ngOnInit(): void {
     this.transactionService.transactions$.subscribe((transactions) => {
@@ -77,20 +76,20 @@ export class TransactionsComponent implements OnInit {
     };
 
     if (this.editingTransaction) {
-      this.transactions = this.transactions.map((item) =>
-        item.id === this.editingTransaction?.id ? formattedTransaction : item,
-      );
+      this.transactionService.updateTransaction(formattedTransaction).subscribe(() => {
+        this.showToast('Transação atualizada com sucesso');
 
-      this.showToast('Transação atualizada com sucesso');
-    } else {
-      this.transactions.unshift(formattedTransaction);
+        this.closeModal();
+      });
 
-      this.showToast('Transação criada com sucesso');
+      return;
     }
 
-    this.transactionService.updateTransactions(this.transactions);
+    this.transactionService.createTransaction(formattedTransaction).subscribe(() => {
+      this.showToast('Transação criada com sucesso');
 
-    this.closeModal();
+      this.closeModal();
+    });
   }
 
   editTransaction(transaction: Transaction): void {
@@ -106,21 +105,15 @@ export class TransactionsComponent implements OnInit {
   }
 
   confirmDelete(): void {
-    if (!this.transactionToDelete) return;
+    if (!this.transactionToDelete) {
+      return;
+    }
 
-    this.transactions = this.transactions.filter(
-      (transaction) => transaction.id !== this.transactionToDelete?.id,
-    );
+    this.transactionService.deleteTransaction(this.transactionToDelete.id).subscribe(() => {
+      this.closeConfirmModal();
 
-    this.transactionService.updateTransactions(this.transactions);
-
-    this.closeConfirmModal();
-
-    this.showToast(
-      'Transação deletada com sucesso',
-
-      'error',
-    );
+      this.showToast('Transação deletada com sucesso', 'error');
+    });
   }
 
   closeConfirmModal(): void {
@@ -145,11 +138,11 @@ export class TransactionsComponent implements OnInit {
   showToast(
     message: string,
 
-    type = 'success',
+    toastType: 'success' | 'error' = 'success',
   ): void {
     this.toastMessage = message;
 
-    this.toastType = type;
+    this.toastType = toastType;
 
     this.toastVisible = true;
 

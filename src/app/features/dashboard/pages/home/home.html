@@ -1,14 +1,11 @@
 <div class="dashboard-grid">
-  <app-finance-card titulo="Saldo Total" [valor]="'R$ ' + balance.toFixed(2)" tipo="saldo">
-  </app-finance-card>
+  <app-finance-card titulo="Saldo Total" [valor]="balance" tipo="saldo"> </app-finance-card>
 
-  <app-finance-card titulo="Entradas" [valor]="'R$ ' + totalIncome.toFixed(2)" tipo="entrada">
-  </app-finance-card>
+  <app-finance-card titulo="Entradas" [valor]="totalIncome" tipo="entrada"> </app-finance-card>
 
-  <app-finance-card titulo="Saídas" [valor]="'R$ ' + totalExpense.toFixed(2)" tipo="saida">
-  </app-finance-card>
+  <app-finance-card titulo="Saídas" [valor]="totalExpense" tipo="saida"> </app-finance-card>
 </div>
 
-<app-finance-chart> </app-finance-chart>
+<app-finance-chart></app-finance-chart>
 
-<app-recent-transactions> </app-recent-transactions>
+<app-recent-transactions></app-recent-transactions>

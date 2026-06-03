@@ -4,6 +4,10 @@ import { ApexChart, ApexNonAxisChartSeries, ApexResponsive } from 'ng-apexcharts
 
 import { NgApexchartsModule } from 'ng-apexcharts';
 
+import { TransactionService } from '../../../../services/transaction';
+
+import { Transaction } from '../../../../core/models/transaction.model';
+
 @Component({
   selector: 'app-finance-chart',
 
@@ -16,10 +20,11 @@ import { NgApexchartsModule } from 'ng-apexcharts';
   styleUrls: ['./finance-chart.css'],
 })
 export class FinanceChartComponent implements OnInit {
+  constructor(private transactionService: TransactionService) {}
 
   public chartSeries: ApexNonAxisChartSeries = [];
 
-  public chartLabels: string[] = ['Entradas', 'Saídas'];
+  public readonly chartLabels: string[] = ['Entradas', 'Saídas'];
 
   public chartDetails: ApexChart = {
     type: 'donut',
@@ -29,16 +34,9 @@ export class FinanceChartComponent implements OnInit {
     toolbar: {
       show: false,
     },
-
   };
 
-  public chartColors = [
-
-  '#3b82f6',
-
-  '#ef4444'
-
-];
+  public readonly chartColors: string[] = ['#3b82f6', '#ef4444'];
 
   public chartResponsive: ApexResponsive[] = [
     {
@@ -61,52 +59,19 @@ export class FinanceChartComponent implements OnInit {
   totalExpense = 0;
 
   ngOnInit(): void {
-    const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
-
-    this.calculateChartData(transactions);
+    this.transactionService.transactions$.subscribe((transactions) => {
+      this.calculateChartData(transactions);
+    });
   }
 
-  calculateChartData(transactions: any[]) {
-
+  calculateChartData(transactions: Transaction[]): void {
     this.totalIncome = transactions
-
       .filter((transaction) => transaction.tipo === 'entrada')
-
-      .reduce(
-        (total, transaction) =>
-          total +
-          Number(
-            transaction.valor
-
-              .replace('R$', '')
-
-              .replace('+', '')
-
-              .trim(),
-          ),
-
-        0,
-      );
+      .reduce((total, transaction) => total + transaction.valor, 0);
 
     this.totalExpense = transactions
-
       .filter((transaction) => transaction.tipo === 'saida')
-
-      .reduce(
-        (total, transaction) =>
-          total +
-          Number(
-            transaction.valor
-
-              .replace('R$', '')
-
-              .replace('-', '')
-
-              .trim(),
-          ),
-
-        0,
-      );
+      .reduce((total, transaction) => total + transaction.valor, 0);
 
     this.chartSeries = [this.totalIncome, this.totalExpense];
   }

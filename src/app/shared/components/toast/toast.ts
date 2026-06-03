@@ -18,7 +18,7 @@ export class ToastComponent {
   message = '';
 
   @Input()
-  type = 'success';
+  type: 'success' | 'error' = 'success';
 
   @Input()
   visible = false;

@@ -1,59 +1,62 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { Transaction } from '../core/models/transaction.model';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class TransactionService {
-  private transactionsSubject = new BehaviorSubject<any[]>(this.getTransactionsFromStorage());
+  private readonly STORAGE_KEY = 'transactions';
 
-  transactions$ = this.transactionsSubject.asObservable();
+  private transactionsSubject = new BehaviorSubject<Transaction[]>(this.loadTransactions());
 
-  private getTransactionsFromStorage(): any[] {
-    return JSON.parse(localStorage.getItem('transactions') || '[]');
+  public transactions$ = this.transactionsSubject.asObservable();
+
+  private loadTransactions(): Transaction[] {
+    return JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '[]');
   }
 
-  getTransactions() {
+  private saveTransactions(transactions: Transaction[]): void {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(transactions));
+
+    this.transactionsSubject.next(transactions);
+  }
+
+  getTransactions(): Transaction[] {
     return this.transactionsSubject.value;
   }
 
-  addTransaction(transaction: any) {
-    const updatedTransactions = [...this.getTransactions(), transaction];
+  createTransaction(transaction: Transaction): Observable<Transaction> {
+    const transactions = this.getTransactions();
 
-    localStorage.setItem(
-      'transactions',
+    this.saveTransactions([transaction, ...transactions]);
 
-      JSON.stringify(updatedTransactions),
-    );
-
-    this.transactionsSubject.next(updatedTransactions);
+    return of(transaction);
   }
 
-  deleteTransaction(index: number) {
-    const updatedTransactions = this.getTransactions();
-
-    updatedTransactions.splice(index, 1);
-
-    localStorage.setItem(
-      'transactions',
-
-      JSON.stringify(updatedTransactions),
+  updateTransaction(transaction: Transaction): Observable<Transaction> {
+    const updatedTransactions = this.getTransactions().map((currentTransaction) =>
+      currentTransaction.id === transaction.id ? transaction : currentTransaction,
     );
 
-    this.transactionsSubject.next(updatedTransactions);
+    this.saveTransactions(updatedTransactions);
+
+    return of(transaction);
   }
 
-  updateTransactions(transactions: any[]) {
-    localStorage.setItem(
-      'transactions',
-
-      JSON.stringify(transactions),
+  deleteTransaction(id: number): Observable<void> {
+    const updatedTransactions = this.getTransactions().filter(
+      (transaction) => transaction.id !== id,
     );
 
-    this.transactionsSubject.next(transactions);
+    this.saveTransactions(updatedTransactions);
+
+    return of(void 0);
+  }
+
+  refreshTransactions(transactions: Transaction[]): void {
+    this.saveTransactions(transactions);
   }
 }

@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+
 import { FinanceCardComponent } from '../../components/finance-card/finance-card';
 import { FinanceChartComponent } from '../../components/finance-chart/finance-chart';
 import { RecentTransactionsComponent } from '../../components/recent-transactions/recent-transactions';
 
+import { TransactionService } from '../../../../services/transaction';
+
+import { Transaction } from '../../../../core/models/transaction.model';
+
 @Component({
   selector: 'app-home',
+
   imports: [FinanceCardComponent, FinanceChartComponent, RecentTransactionsComponent],
+
   templateUrl: './home.html',
+
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
+  constructor(private transactionService: TransactionService) {}
+
   balance = 0;
 
   totalIncome = 0;
@@ -17,57 +27,19 @@ export class Home implements OnInit {
   totalExpense = 0;
 
   ngOnInit(): void {
-    const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
-
-    console.log(transactions);
-
-    this.calculateFinancialSummary(transactions);
+    this.transactionService.transactions$.subscribe((transactions) => {
+      this.calculateFinancialSummary(transactions);
+    });
   }
 
-  calculateFinancialSummary(transactions: any[]) {
+  private calculateFinancialSummary(transactions: Transaction[]): void {
     this.totalIncome = transactions
-
       .filter((transaction) => transaction.tipo === 'entrada')
-
-      .reduce(
-        (total, transaction) =>
-          total +
-          Number(
-            transaction.valor
-
-              .replace('R$', '')
-
-              .replace('+', '')
-
-              .replace('-', '')
-
-              .trim(),
-          ),
-
-        0,
-      );
+      .reduce((total, transaction) => total + transaction.valor, 0);
 
     this.totalExpense = transactions
-
       .filter((transaction) => transaction.tipo === 'saida')
-
-      .reduce(
-        (total, transaction) =>
-          total +
-          Number(
-            transaction.valor
-
-              .replace('R$', '')
-
-              .replace('+', '')
-
-              .replace('-', '')
-
-              .trim(),
-          ),
-
-        0,
-      );
+      .reduce((total, transaction) => total + transaction.valor, 0);
 
     this.balance = this.totalIncome - this.totalExpense;
   }

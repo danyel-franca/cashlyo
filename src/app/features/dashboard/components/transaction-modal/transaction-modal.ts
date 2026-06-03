@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+
 import { CommonModule } from '@angular/common';
+
+import { FormsModule } from '@angular/forms';
+
+import { Transaction } from '../../../../core/models/transaction.model';
 
 @Component({
   selector: 'app-transaction-modal',
@@ -16,25 +20,15 @@ export class TransactionModal implements OnChanges {
   close = new EventEmitter<void>();
 
   @Output()
-  save = new EventEmitter<any>();
+  save = new EventEmitter<Transaction>();
 
   @Input()
-  transactionData: any = null;
+  transactionData: Transaction | null = null;
 
-  closeModal() {
-    this.close.emit();
-  }
-
-  saveTransaction() {
-    this.save.emit(this.newTransaction);
-
-    this.closeModal();
-  }
-
-  newTransaction = {
+  newTransaction: Partial<Transaction> = {
     descricao: '',
 
-    valor: '',
+    valor: 0,
 
     tipo: 'entrada',
 
@@ -43,24 +37,35 @@ export class TransactionModal implements OnChanges {
     data: '',
   };
 
-  incomeCategories = ['Trabalho', 'Investimentos', 'Freelance', 'Salário', 'Vendas'];
+  readonly incomeCategories = ['Trabalho', 'Investimentos', 'Freelance', 'Salário', 'Vendas'];
 
-  expenseCategories = ['Alimentação', 'Transporte', 'Saúde', 'Lazer', 'Educação', 'Moradia'];
+  readonly expenseCategories = [
+    'Alimentação',
+    'Transporte',
+    'Saúde',
+    'Lazer',
+    'Educação',
+    'Moradia',
+  ];
 
-  get filteredCategories() {
+  get filteredCategories(): string[] {
     return this.newTransaction.tipo === 'entrada' ? this.incomeCategories : this.expenseCategories;
+  }
+
+  closeModal(): void {
+    this.close.emit();
+  }
+
+  saveTransaction(): void {
+    this.save.emit(this.newTransaction as Transaction);
+
+    this.closeModal();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactionData'] && this.transactionData) {
       this.newTransaction = {
         ...this.transactionData,
-
-        valor: this.transactionData.valor
-
-          .replace('+ R$ ', '')
-
-          .replace('- R$ ', ''),
       };
     }
   }

@@ -1,22 +1,30 @@
 <div class="modal-overlay">
   <div class="modal-container">
-    <!-- HEADER -->
 
     <div class="modal-header">
       <div>
-        <h2>Nova Transação</h2>
+        <h2>
+          {{ transactionData ? 'Editar Transação' : 'Nova Transação' }}
+        </h2>
 
-        <p>Adicione uma nova movimentação financeira</p>
+        <p>
+          {{
+            transactionData
+              ? 'Atualize os dados da movimentação financeira'
+              : 'Adicione uma nova movimentação financeira'
+          }}
+        </p>
       </div>
 
-      <button class="close-button" (click)="closeModal()">✕</button>
+      <button type="button" class="close-button" (click)="closeModal()">✕</button>
     </div>
 
-    <form class="modal-form">
-      <div class="form-group">
-        <label> Tipo </label>
 
-        <select [(ngModel)]="newTransaction.tipo" name="tipo">
+    <form class="modal-form" (ngSubmit)="saveTransaction()">
+      <div class="form-group">
+        <label for="tipo"> Tipo </label>
+
+        <select id="tipo" [(ngModel)]="newTransaction.tipo" name="tipo">
           <option value="entrada">Entrada</option>
 
           <option value="saida">Saída</option>
@@ -24,9 +32,9 @@
       </div>
 
       <div class="form-group">
-        <label> Categoria </label>
+        <label for="categoria"> Categoria </label>
 
-        <select [(ngModel)]="newTransaction.categoria" name="categoria">
+        <select id="categoria" [(ngModel)]="newTransaction.categoria" name="categoria">
           <option value="">Selecione uma categoria</option>
 
           <option *ngFor="let category of filteredCategories" [value]="category">
@@ -36,20 +44,24 @@
       </div>
 
       <div class="form-group">
-        <label> Valor </label>
+        <label for="valor"> Valor </label>
 
         <input
+          id="valor"
           type="number"
-          placeholder="R$ 0,00"
+          step="0.01"
+          min="0"
+          placeholder="0,00"
           [(ngModel)]="newTransaction.valor"
           name="valor"
         />
       </div>
 
       <div class="form-group">
-        <label> Descrição </label>
+        <label for="descricao"> Descrição </label>
 
         <input
+          id="descricao"
           type="text"
           placeholder="Digite a descrição..."
           [(ngModel)]="newTransaction.descricao"
@@ -58,13 +70,13 @@
       </div>
 
       <div class="form-group">
-        <label> Data </label>
+        <label for="data"> Data </label>
 
-        <input type="date" [(ngModel)]="newTransaction.data" name="data" />
+        <input id="data" type="date" [(ngModel)]="newTransaction.data" name="data" />
       </div>
 
-      <button type="submit" class="save-button" (click)="saveTransaction()">
-        Salvar Transação
+      <button type="submit" class="save-button">
+        {{ transactionData ? 'Atualizar Transação' : 'Salvar Transação' }}
       </button>
     </form>
   </div>
