@@ -14,48 +14,44 @@ import { Router } from '@angular/router';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
-  email: string = '';
-  senha: string = '';
+export class Login implements OnInit {
   erroLogin: string = '';
 
   constructor(
-  private fb: FormBuilder,
-  private authService: AuthService,
-  private router: Router
-) {}
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   entrar(): void {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
 
-  if (this.loginForm.invalid) {
+      return;
+    }
 
-    this.loginForm.markAllAsTouched();
+    const email = this.loginForm.value.email;
 
-    return;
+    const senha = this.loginForm.value.senha;
+
+    this.authService.login(email, senha).subscribe({
+      next: (loginSucesso) => {
+        if (loginSucesso) {
+          this.erroLogin = '';
+
+          this.router.navigate(['/dashboard']);
+
+          return;
+        }
+
+        this.erroLogin = 'Email ou senha incorretos';
+      },
+
+      error: () => {
+        this.erroLogin = 'Erro ao realizar login';
+      },
+    });
   }
-
-  const email = this.loginForm.value.email;
-  const senha = this.loginForm.value.senha;
-
-  const loginSucesso =
-    this.authService.login(email, senha);
-
-  if (loginSucesso) {
-
-    this.erroLogin = '';
-
-    this.router.navigate(['/dashboard']);
-
-    console.log('Login realizado com sucesso!');
-
-  } else {
-
-    this.erroLogin =
-      'Email ou senha incorretos';
-
-  }
-
-}
 
   loginForm!: FormGroup;
 

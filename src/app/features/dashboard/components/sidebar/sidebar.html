@@ -1,6 +1,4 @@
 <div class="sidebar">
-  <!-- LOGO -->
-
   <div class="sidebar-logo">
     <div class="logo-icon">C</div>
 
@@ -10,31 +8,19 @@
     </div>
   </div>
 
-  <!-- MENU -->
-
   <nav class="sidebar-menu">
-    <a routerLink="/dashboard" routerLinkActive="active"> 🏠 Home </a>
-
-    <a routerLink="/dashboard/transactions" routerLinkActive="active"> 💸 Transações </a>
-
-    <a routerLink="/flow" routerLinkActive="active-link">
-      <span>📈</span>
-      Fluxo
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      🏠 Home
     </a>
 
-    <a routerLink="/profile" routerLinkActive="active-link">
-      <span>👤</span>
-      Perfil
-    </a>
+    <a routerLink="/dashboard/transactions" routerLinkActive="active-link"> 💸 Transações </a>
+
+    <a routerLink="/dashboard/flow" routerLinkActive="active-link"> 📈 Fluxo </a>
+
+    <a routerLink="/dashboard/profile" routerLinkActive="active-link"> 👤 Perfil </a>
   </nav>
-
-  <!-- BOTTOM CARD -->
-
-  <div class="sidebar-card">
-    <h3>Cashlyo Pro</h3>
-
-    <p>Tenha acesso completo aos relatórios financeiros e insights avançados.</p>
-
-    <button>Upgrade</button>
-  </div>
 </div>

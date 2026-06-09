@@ -5,39 +5,23 @@
     </span>
 
     <div class="card-icon">
-      <span *ngIf="tipo === 'saldo'"> 💰 </span>
+      <span *ngIf="tipo === 'saldo'">💰</span>
 
-      <span *ngIf="tipo === 'entrada'"> 📈 </span>
+      <span *ngIf="tipo === 'entrada'">📈</span>
 
-      <span *ngIf="tipo === 'saida'"> 📉 </span>
+      <span *ngIf="tipo === 'saida'">📉</span>
     </div>
   </div>
 
-  <div class="finance-card" [ngClass]="tipo">
-    <div class="card-top">
-      <span class="card-title">
-        {{ titulo }}
-      </span>
+  <h2>
+    {{ valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
+  </h2>
 
-      <div class="card-icon">
-        <span *ngIf="tipo === 'saldo'"> 💰 </span>
+  <p class="card-growth">
+    <span *ngIf="tipo === 'entrada'"> Total de receitas </span>
 
-        <span *ngIf="tipo === 'entrada'"> 📈 </span>
+    <span *ngIf="tipo === 'saida'"> Total de despesas </span>
 
-        <span *ngIf="tipo === 'saida'"> 📉 </span>
-      </div>
-    </div>
-
-    <h2>
-      {{ valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
-    </h2>
-
-    <p class="card-growth">
-      <span *ngIf="tipo === 'entrada'"> Total de receitas </span>
-
-      <span *ngIf="tipo === 'saida'"> Total de despesas </span>
-
-      <span *ngIf="tipo === 'saldo'"> Saldo atual </span>
-    </p>
-  </div>
+    <span *ngIf="tipo === 'saldo'"> Saldo atual </span>
+  </p>
 </div>
