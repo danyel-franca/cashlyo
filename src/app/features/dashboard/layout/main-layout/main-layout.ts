@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { Sidebar} from '../../components/sidebar/sidebar';
+import { Sidebar } from '../../components/sidebar/sidebar';
 import { Header } from '../../components/header/header';
 
 import { registerLocaleData } from '@angular/common';
@@ -13,15 +13,15 @@ registerLocaleData(localePt);
   selector: 'app-main-layout',
   standalone: true,
 
-  imports: [
-    RouterOutlet,
-    Sidebar,
-    Header
-  ],
+  imports: [RouterOutlet, Sidebar, Header],
 
   templateUrl: './main-layout.html',
-  styleUrl: './main-layout.css'
+  styleUrl: './main-layout.css',
 })
 export class MainLayoutComponent {
+  sidebarOpen = false;
 
+  toggleSidebar(): void {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
 }

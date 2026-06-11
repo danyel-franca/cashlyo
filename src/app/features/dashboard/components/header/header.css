@@ -3,7 +3,6 @@
 }
 
 .header {
-
   width: 100%;
   min-height: 90px;
 
@@ -39,7 +38,6 @@
 }
 
 .page-badge {
-
   width: fit-content;
 
   padding: 6px 12px;
@@ -59,7 +57,6 @@
 }
 
 .page-info h1 {
-
   font-size: 28px;
   font-weight: 700;
 
@@ -74,7 +71,6 @@
 /* RIGHT */
 
 .header-right {
-
   display: flex;
   align-items: center;
 
@@ -88,7 +84,6 @@
 }
 
 .search-box input {
-
   width: 280px;
   height: 48px;
 
@@ -108,17 +103,14 @@
 }
 
 .search-box input:focus {
-
   border-color: #2563eb;
 
-  box-shadow:
-    0 0 0 4px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 /* NOTIFICATION */
 
 .notification-btn {
-
   width: 48px;
   height: 48px;
 
@@ -138,7 +130,6 @@
 /* USER CARD */
 
 .user-card {
-
   display: flex;
   align-items: center;
 
@@ -150,12 +141,10 @@
 
   border-radius: 18px;
 
-  box-shadow:
-    0 6px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
 .user-text {
-
   display: flex;
   flex-direction: column;
 
@@ -173,14 +162,12 @@
 }
 
 .avatar {
-
   width: 48px;
   height: 48px;
 
   border-radius: 50%;
 
-  background:
-    linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
 
   color: white;
 
@@ -191,27 +178,104 @@
   font-size: 18px;
   font-weight: bold;
 
-  box-shadow:
-    0 6px 18px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+}
+
+.menu-btn {
+  display: none;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: white;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+.desktop-title {
+  display: block;
+}
+
+.mobile-title {
+  display: none;
 }
 
 /* RESPONSIVO */
 
-@media (max-width: 900px) {
-
+@media (max-width: 768px) {
   .header {
-    padding: 20px;
-    flex-direction: column;
-    gap: 20px;
+    padding: 16px;
+
+    min-height: auto;
+
+    flex-direction: row;
+
+    justify-content: space-between;
+
     align-items: flex-start;
   }
 
-  .header-right {
-    width: 100%;
-    flex-wrap: wrap;
+  .desktop-title {
+    display: none;
   }
 
-  .search-box input {
-    width: 100%;
+  .menu-btn {
+    display: block;
+  }
+
+  .mobile-title {
+    display: block;
+  }
+
+  .page-info h1 {
+    font-size: 22px;
+  }
+
+  .page-info p {
+    display: none;
+  }
+
+  .page-badge {
+    font-size: 10px;
+  }
+
+  .search-box {
+    display: none;
+  }
+
+  .user-text {
+    display: none;
+  }
+
+  .user-card {
+    padding: 8px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+
+    font-size: 16px;
+  }
+
+  .header-right {
+    width: auto;
+
+    gap: 10px;
+  }
+
+  .notification-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .page-info h1 {
+    font-size: 20px;
   }
 }

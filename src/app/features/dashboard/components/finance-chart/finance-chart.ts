@@ -29,7 +29,7 @@ export class FinanceChartComponent implements OnInit {
   public chartDetails: ApexChart = {
     type: 'donut',
 
-    height: 350,
+    height: 280,
 
     toolbar: {
       show: false,
@@ -40,11 +40,11 @@ export class FinanceChartComponent implements OnInit {
 
   public chartResponsive: ApexResponsive[] = [
     {
-      breakpoint: 480,
+      breakpoint: 768,
 
       options: {
         chart: {
-          width: 300,
+          height: 220,
         },
 
         legend: {

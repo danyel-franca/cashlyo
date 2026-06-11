@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar" [class.sidebar-open]="isOpen">
   <div class="sidebar-logo">
     <div class="logo-icon">C</div>
 
@@ -14,13 +14,23 @@
       routerLinkActive="active-link"
       [routerLinkActiveOptions]="{ exact: true }"
     >
-      🏠 Home
+      <span>🏠</span>
+      <span class="menu-text">Home</span>
     </a>
 
-    <a routerLink="/dashboard/transactions" routerLinkActive="active-link"> 💸 Transações </a>
+    <a routerLink="/dashboard/transactions" routerLinkActive="active-link">
+      <span>💸</span>
+      <span class="menu-text">Transações</span>
+    </a>
 
-    <a routerLink="/dashboard/flow" routerLinkActive="active-link"> 📈 Fluxo </a>
+    <a routerLink="/dashboard/flow" routerLinkActive="active-link">
+      <span>📈</span>
+      <span class="menu-text">Fluxo</span>
+    </a>
 
-    <a routerLink="/dashboard/profile" routerLinkActive="active-link"> 👤 Perfil </a>
+    <a routerLink="/dashboard/profile" routerLinkActive="active-link">
+      <span>👤</span>
+      <span class="menu-text">Perfil</span>
+    </a>
   </nav>
 </div>

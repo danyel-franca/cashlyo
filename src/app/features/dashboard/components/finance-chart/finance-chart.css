@@ -10,6 +10,9 @@
 
   box-shadow:
     0 10px 30px rgba(0,0,0,0.05);
+
+  width: 100%;
+
 }
 
 .chart-header {
@@ -38,3 +41,59 @@
 
   font-size: 14px;
 }
+
+@media (max-width: 768px) {
+
+  .chart-container {
+
+    padding: 20px;
+
+    border-radius: 20px;
+  }
+
+  .chart-header {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 8px;
+  }
+
+  .chart-header h2 {
+
+    font-size: 20px;
+  }
+
+}
+
+.finance-apex-chart {
+
+  display: block;
+
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+
+  .finance-card {
+
+    padding: 18px;
+
+    gap: 12px;
+  }
+
+  .finance-card h2 {
+
+    font-size: 28px;
+  }
+
+  .card-icon {
+
+    width: 44px;
+    height: 44px;
+  }
+
+}
+
+
