@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
@@ -12,5 +12,12 @@ export class Sidebar {
 
   @Input()
   isOpen = false;
+
+  @Output()
+  linkClick = new EventEmitter<void>();
+
+  fecharMenu(): void {
+    this.linkClick.emit();
+  }
 
 }

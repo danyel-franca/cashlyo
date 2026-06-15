@@ -1,8 +1,12 @@
 <div class="layout-container">
-  <app-sidebar [isOpen]="sidebarOpen"> </app-sidebar>
+  @if (sidebarOpen) {
+    <div class="sidebar-backdrop" (click)="toggleSidebar()"></div>
+  }
+
+  <app-sidebar [isOpen]="sidebarOpen" (linkClick)="sidebarOpen = false"> </app-sidebar>
 
   <div class="layout-content">
-    <app-header (menuClick)="toggleSidebar()"> </app-header>
+    <app-header (menuClick)="toggleSidebar()"></app-header>
 
     <div class="page-content">
       <router-outlet></router-outlet>

@@ -1,0 +1,110 @@
+<div class="flow-page">
+  <div class="flow-header">
+    <div>
+      <h1>Fluxo Financeiro</h1>
+      <p>Acompanhe a evolução das receitas e despesas.</p>
+    </div>
+
+    <select>
+      <option>Últimos 7 dias</option>
+      <option selected>Últimos 30 dias</option>
+      <option>Últimos 12 meses</option>
+    </select>
+  </div>
+
+  <div class="flow-summary">
+    <div class="summary-card income">
+      <span>📈 Receitas</span>
+      <h3>R$ 15.400</h3>
+      <small>+12% este mês</small>
+    </div>
+
+    <div class="summary-card expense">
+      <span>📉 Despesas</span>
+      <h3>R$ 8.200</h3>
+      <small>+4% este mês</small>
+    </div>
+
+    <div class="summary-card balance">
+      <span>💰 Saldo</span>
+      <h3>R$ 7.200</h3>
+      <small>Resultado positivo</small>
+    </div>
+  </div>
+
+  <div class="flow-chart">
+    <div class="chart-header">
+      <h2>Evolução Financeira</h2>
+      <span>Atualizado agora</span>
+    </div>
+
+    <apx-chart
+      [series]="chartSeries"
+      [chart]="chartDetails"
+      [stroke]="chartStroke"
+      [xaxis]="chartXAxis"
+      [dataLabels]="chartDataLabels"
+      [legend]="chartLegend"
+      [grid]="chartGrid"
+      [colors]="chartColors"
+    >
+    </apx-chart>
+  </div>
+
+  <div class="flow-bottom">
+    <div class="category-grid">
+      <div class="category-card">
+        <span>🍔</span>
+        <h3>Alimentação</h3>
+        <strong>R$ 850</strong>
+      </div>
+
+      <div class="category-card">
+        <span>🚗</span>
+        <h3>Transporte</h3>
+        <strong>R$ 420</strong>
+      </div>
+
+      <div class="category-card">
+        <span>🎮</span>
+        <h3>Lazer</h3>
+        <strong>R$ 320</strong>
+      </div>
+
+      <div class="category-card">
+        <span>🏠</span>
+        <h3>Moradia</h3>
+        <strong>R$ 2.100</strong>
+      </div>
+    </div>
+
+    <div class="insights-list">
+      <div class="insight-card positive">
+        <span>📈</span>
+
+        <div>
+          <strong>Receita aumentou</strong>
+          <p>+15% este mês</p>
+        </div>
+      </div>
+
+      <div class="insight-card warning">
+        <span>⚠</span>
+
+        <div>
+          <strong>Transporte cresceu</strong>
+          <p>+20% este mês</p>
+        </div>
+      </div>
+
+      <div class="insight-card info">
+        <span>💡</span>
+
+        <div>
+          <strong>Maior gasto</strong>
+          <p>Moradia</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

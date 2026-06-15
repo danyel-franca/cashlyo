@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+import { CommonModule } from '@angular/common';
+
 import { Sidebar } from '../../components/sidebar/sidebar';
 import { Header } from '../../components/header/header';
 
@@ -13,7 +15,7 @@ registerLocaleData(localePt);
   selector: 'app-main-layout',
   standalone: true,
 
-  imports: [RouterOutlet, Sidebar, Header],
+  imports: [RouterOutlet, Sidebar, Header, CommonModule],
 
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',
