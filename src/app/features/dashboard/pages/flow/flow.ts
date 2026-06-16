@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+import { TransactionService } from '../../../../services/transaction';
+import { Transaction } from '../../../../core/models/transaction.model';
 
 import {
   ApexAxisChartSeries,
@@ -14,26 +17,84 @@ import {
 @Component({
   selector: 'app-flow',
   standalone: true,
-  imports: [NgApexchartsModule],
+  imports: [NgApexchartsModule, CurrencyPipe],
   templateUrl: './flow.html',
   styleUrl: './flow.css',
 })
-export class Flow {
-  public chartSeries: ApexAxisChartSeries = [
-    {
-      name: 'Receitas',
-      data: [1200, 1800, 2200, 1700, 2600, 3100],
-    },
-    {
-      name: 'Despesas',
-      data: [800, 1200, 1400, 1100, 1800, 2100],
-    },
-  ];
+export class Flow implements OnInit {
+  constructor(private transactionService: TransactionService) {}
 
-  public chartColors = [
-    '#2563eb', // azul
-    '#dc2626', // vermelho
-  ];
+  public totalIncome = 0;
+
+  public totalExpense = 0;
+
+  public totalBalance = 0;
+
+  private generateChartData(transactions: Transaction[]): void {
+    const months = [
+      'Jan',
+      'Fev',
+      'Mar',
+      'Abr',
+      'Mai',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Set',
+      'Out',
+      'Nov',
+      'Dez',
+    ];
+
+    const incomeByMonth = new Array(12).fill(0);
+
+    const expenseByMonth = new Array(12).fill(0);
+
+    transactions.forEach((transaction) => {
+      const month = new Date(transaction.data).getMonth();
+
+      if (transaction.tipo === 'entrada') {
+        incomeByMonth[month] += transaction.valor;
+      } else {
+        expenseByMonth[month] += transaction.valor;
+      }
+    });
+
+    this.totalIncome = transactions
+      .filter((transaction) => transaction.tipo === 'entrada')
+      .reduce((sum, transaction) => sum + transaction.valor, 0);
+
+    this.totalExpense = transactions
+      .filter((transaction) => transaction.tipo === 'saida')
+      .reduce((sum, transaction) => sum + transaction.valor, 0);
+
+    this.totalBalance = this.totalIncome - this.totalExpense;
+
+    this.chartSeries = [
+      {
+        name: 'Receitas',
+        data: incomeByMonth,
+      },
+      {
+        name: 'Despesas',
+        data: expenseByMonth,
+      },
+    ];
+
+    this.chartXAxis = {
+      categories: months,
+    };
+  }
+
+  ngOnInit(): void {
+    this.transactionService.transactions$.subscribe((transactions) => {
+      this.generateChartData(transactions);
+    });
+  }
+
+  public chartSeries: ApexAxisChartSeries = [];
+
+  public chartColors = ['#2563eb', '#dc2626'];
 
   public chartDetails: ApexChart = {
     type: 'line',

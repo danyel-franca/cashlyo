@@ -15,20 +15,28 @@
   <div class="flow-summary">
     <div class="summary-card income">
       <span>📈 Receitas</span>
-      <h3>R$ 15.400</h3>
-      <small>+12% este mês</small>
+      <h3>
+        {{ totalIncome | currency: 'BRL' : 'symbol' : '1.2-2' }}
+      </h3>
+      <small>Total de entradas registradas</small>
     </div>
 
     <div class="summary-card expense">
       <span>📉 Despesas</span>
-      <h3>R$ 8.200</h3>
-      <small>+4% este mês</small>
+      <h3>
+        {{ totalExpense | currency: 'BRL' : 'symbol' : '1.2-2' }}
+      </h3>
+      <small>Total de saídas registradas</small>
     </div>
 
     <div class="summary-card balance">
       <span>💰 Saldo</span>
-      <h3>R$ 7.200</h3>
-      <small>Resultado positivo</small>
+      <h3>
+        {{ totalBalance | currency: 'BRL' : 'symbol' : '1.2-2' }}
+      </h3>
+      <small>
+        {{ totalBalance >= 0 ? 'Resultado positivo' : 'Resultado negativo' }}
+      </small>
     </div>
   </div>
 
