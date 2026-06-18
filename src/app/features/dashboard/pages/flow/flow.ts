@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgIf, NgFor } from '@angular/common';
 import { TransactionService } from '../../../../services/transaction';
 import { Transaction } from '../../../../core/models/transaction.model';
+import { CategoriesModal } from '../../components/categories-modal/categories-modal';
 
 import {
   ApexAxisChartSeries,
@@ -17,7 +18,7 @@ import {
 @Component({
   selector: 'app-flow',
   standalone: true,
-  imports: [NgApexchartsModule, CurrencyPipe],
+  imports: [NgApexchartsModule, CurrencyPipe, NgIf, NgFor, CategoriesModal],
   templateUrl: './flow.html',
   styleUrl: './flow.css',
 })
@@ -84,6 +85,33 @@ export class Flow implements OnInit {
     this.chartXAxis = {
       categories: months,
     };
+
+    const categoriesMap = new Map<string, number>();
+
+    transactions
+      .filter((transaction) => transaction.tipo === 'saida')
+      .forEach((transaction) => {
+        const currentValue = categoriesMap.get(transaction.categoria) || 0;
+
+        categoriesMap.set(transaction.categoria, currentValue + transaction.valor);
+      });
+
+    this.topCategories = Array.from(categoriesMap.entries())
+      .map(([name, value]) => ({
+        name,
+        value,
+        percentage: this.totalExpense > 0 ? (value / this.totalExpense) * 100 : 0,
+      }))
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 4);
+
+    this.allCategories = Array.from(categoriesMap.entries())
+      .map(([name, value]) => ({
+        name,
+        value,
+        percentage: this.totalExpense > 0 ? (value / this.totalExpense) * 100 : 0,
+      }))
+      .sort((a, b) => b.value - a.value);
   }
 
   ngOnInit(): void {
@@ -128,4 +156,27 @@ export class Flow implements OnInit {
   public chartGrid: ApexGrid = {
     borderColor: '#e5e7eb',
   };
+
+  // Categories
+  public categoriesModalOpen = false;
+
+  openCategoriesModal(): void {
+    this.categoriesModalOpen = true;
+  }
+
+  closeCategoriesModal(): void {
+    this.categoriesModalOpen = false;
+  }
+
+  public topCategories: {
+    name: string;
+    value: number;
+    percentage: number;
+  }[] = [];
+
+  public allCategories: {
+    name: string;
+    value: number;
+    percentage: number;
+  }[] = [];
 }

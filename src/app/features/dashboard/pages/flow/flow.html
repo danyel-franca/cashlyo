@@ -60,29 +60,22 @@
   </div>
 
   <div class="flow-bottom">
-    <div class="category-grid">
-      <div class="category-card">
-        <span>🍔</span>
-        <h3>Alimentação</h3>
-        <strong>R$ 850</strong>
+    <div class="category-section">
+      <div class="category-grid">
+        <div class="category-card" *ngFor="let category of topCategories">
+
+          <h3>{{ category.name }}</h3>
+
+          <strong>
+            {{ category.value | currency: 'BRL' : 'symbol' : '1.2-2' }}
+          </strong>
+        </div>
       </div>
 
-      <div class="category-card">
-        <span>🚗</span>
-        <h3>Transporte</h3>
-        <strong>R$ 420</strong>
-      </div>
-
-      <div class="category-card">
-        <span>🎮</span>
-        <h3>Lazer</h3>
-        <strong>R$ 320</strong>
-      </div>
-
-      <div class="category-card">
-        <span>🏠</span>
-        <h3>Moradia</h3>
-        <strong>R$ 2.100</strong>
+      <div class="view-all-container">
+        <button class="view-all-btn" (click)="openCategoriesModal()">
+          Ver todas as categorias
+        </button>
       </div>
     </div>
 
@@ -116,3 +109,10 @@
     </div>
   </div>
 </div>
+
+<app-categories-modal
+  *ngIf="categoriesModalOpen"
+  [categories]="allCategories"
+  (close)="closeCategoriesModal()"
+>
+</app-categories-modal>

@@ -220,6 +220,49 @@
   border-left: 4px solid #dc2626  ; /*vermelho*/
 }
 
+.category-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.view-all-container {
+  display: flex;
+  justify-content: center;
+}
+
+.view-all-btn {
+  min-width: 240px;
+  max-width: 300px;
+  width: 100%;
+
+  height: 52px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #2563eb
+  );
+
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.view-all-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 24px rgba(37, 99, 235, 0.25);
+}
+
 /* RESPONSIVO */
 
 @media (max-width: 768px) {

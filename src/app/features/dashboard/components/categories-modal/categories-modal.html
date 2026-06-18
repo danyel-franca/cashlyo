@@ -1,0 +1,33 @@
+<div class="modal-overlay">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div>
+        <h2>Todas as Categorias</h2>
+
+        <p>Visualize o total gasto por categoria</p>
+      </div>
+
+      <button type="button" class="close-button" (click)="close.emit()">✕</button>
+    </div>
+
+    <div class="categories-list">
+      <div class="category-row" *ngFor="let category of categories">
+        <div class="category-header">
+          <span class="category-name">
+            {{ category.name }}
+          </span>
+
+          <strong class="category-value">
+            {{ category.value | currency: 'BRL' : 'symbol' : '1.2-2' }}
+          </strong>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="category.percentage"></div>
+        </div>
+
+        <small> {{ category.percentage | number: '1.0-0' }}% do total de gastos </small>
+      </div>
+    </div>
+  </div>
+</div>
