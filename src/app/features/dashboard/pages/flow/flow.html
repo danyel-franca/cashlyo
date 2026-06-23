@@ -59,31 +59,6 @@
     </apx-chart>
   </div>
 
-  <div class="flow-bottom ">
-    <div class="category-section">
-      <div class="category-grid">
-        <div class="category-card" *ngFor="let category of topCategories">
-
-          <h3>{{ category.name }}</h3>
-
-          <strong>
-            {{ category.value | currency: 'BRL' : 'symbol' : '1.2-2' }}
-          </strong>
-        </div>
-      </div>
-
-      <div class="view-all-container">
-        <button class="view-all-btn" (click)="openCategoriesModal()">
-          Ver todas as categorias
-        </button>
-      </div>
-    </div>
-  </div>
+ 
 </div>
 
-<app-categories-modal
-  *ngIf="categoriesModalOpen"
-  [categories]="allCategories"
-  (close)="closeCategoriesModal()"
->
-</app-categories-modal>

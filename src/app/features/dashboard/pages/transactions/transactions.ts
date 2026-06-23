@@ -8,8 +8,6 @@ import { TransactionModal } from '../../components/transaction-modal/transaction
 
 import { ConfirmModal } from '../../components/confirm-modal/confirm-modal';
 
-import { ToastComponent } from '../../../../shared/components/toast/toast';
-
 import { TransactionService } from '../../../../services/transaction';
 
 import { Transaction } from '../../../../core/models/transaction.model';
@@ -19,7 +17,7 @@ import { Transaction } from '../../../../core/models/transaction.model';
 
   standalone: true,
 
-  imports: [CommonModule, FormsModule, TransactionModal, ConfirmModal, ToastComponent],
+  imports: [CommonModule, FormsModule, TransactionModal, ConfirmModal],
 
   templateUrl: './transactions.html',
 
@@ -42,11 +40,6 @@ export class TransactionsComponent implements OnInit {
 
   transactions: Transaction[] = [];
 
-  toastVisible = false;
-
-  toastMessage = '';
-
-  toastType: 'success' | 'error' = 'success';
 
   ngOnInit(): void {
     this.transactionService.transactions$.subscribe((transactions) => {
@@ -77,8 +70,6 @@ export class TransactionsComponent implements OnInit {
 
     if (this.editingTransaction) {
       this.transactionService.updateTransaction(formattedTransaction).subscribe(() => {
-        this.showToast('Transação atualizada com sucesso');
-
         this.closeModal();
       });
 
@@ -86,8 +77,6 @@ export class TransactionsComponent implements OnInit {
     }
 
     this.transactionService.createTransaction(formattedTransaction).subscribe(() => {
-      this.showToast('Transação criada com sucesso');
-
       this.closeModal();
     });
   }
@@ -111,8 +100,6 @@ export class TransactionsComponent implements OnInit {
 
     this.transactionService.deleteTransaction(this.transactionToDelete.id).subscribe(() => {
       this.closeConfirmModal();
-
-      this.showToast('Transação deletada com sucesso', 'error');
     });
   }
 
@@ -133,21 +120,5 @@ export class TransactionsComponent implements OnInit {
 
       return matchesSearch && matchesFilter;
     });
-  }
-
-  showToast(
-    message: string,
-
-    toastType: 'success' | 'error' = 'success',
-  ): void {
-    this.toastMessage = message;
-
-    this.toastType = toastType;
-
-    this.toastVisible = true;
-
-    setTimeout(() => {
-      this.toastVisible = false;
-    }, 3000);
   }
 }

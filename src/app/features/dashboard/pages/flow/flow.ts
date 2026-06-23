@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CurrencyPipe, NgIf, NgFor } from '@angular/common';
 import { TransactionService } from '../../../../services/transaction';
 import { Transaction } from '../../../../core/models/transaction.model';
-import { CategoriesModal } from '../../components/categories-modal/categories-modal';
 
 import {
   ApexAxisChartSeries,
@@ -18,7 +17,7 @@ import {
 @Component({
   selector: 'app-flow',
   standalone: true,
-  imports: [NgApexchartsModule, CurrencyPipe, NgIf, NgFor, CategoriesModal],
+  imports: [NgApexchartsModule, CurrencyPipe],
   templateUrl: './flow.html',
   styleUrl: './flow.css',
 })
