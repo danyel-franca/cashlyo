@@ -1,0 +1,39 @@
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.profile-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.profile-header p {
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.profile-card {
+  background: #ffffff;
+
+  border-radius: 24px;
+
+  padding: 2rem;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.08);
+
+  display: grid;
+
+  grid-template-columns: 300px 1fr;
+
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  .profile-card {
+    grid-template-columns: 1fr;
+  }
+}

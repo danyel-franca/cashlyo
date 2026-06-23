@@ -4,6 +4,7 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout';
 import { Home } from './pages/home/home';
 import { TransactionsComponent } from './pages/transactions/transactions';
 import { Flow } from './pages/flow/flow';
+import { Profile } from './pages/profile/profile';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -24,6 +25,11 @@ export const DASHBOARD_ROUTES: Routes = [
       {
         path: 'flow',
         component: Flow,
+      },
+
+      {
+        path: 'profile',
+        component: Profile,
       },
     ],
   },
