@@ -4,12 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../shared/services/auth/auth';
 import { Router } from '@angular/router';
+import { RegisterModal } from '../../../../shared/components/register-modal/register-modal';
 
 @Component({
   selector: 'app-login',
   standalone: true,
 
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RegisterModal],
 
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -64,5 +65,15 @@ export class Login implements OnInit {
         [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)],
       ],
     });
+  }
+
+  public registerModalOpen = false;
+
+  openRegisterModal(): void {
+    this.registerModalOpen = true;
+  }
+
+  closeRegisterModal(): void {
+    this.registerModalOpen = false;
   }
 }

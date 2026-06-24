@@ -123,7 +123,7 @@
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
 
-button {
+.login-button {
   height: 52px;
 
   border: none;
@@ -140,7 +140,7 @@ button {
   transition: 0.2s ease;
 }
 
-button:hover {
+.login-button:hover {
   background: #1d4ed8;
   transform: translateY(-2px);
 }
@@ -151,10 +151,12 @@ button:hover {
   font-size: 14px;
 }
 
-.register-text a {
+.register-text button{
   color: #2563eb;
   text-decoration: none;
   font-weight: bold;
+  background: none;
+  border: none;
 }
 
 small {

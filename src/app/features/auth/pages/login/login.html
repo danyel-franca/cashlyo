@@ -40,12 +40,17 @@
         </small>
       </div>
 
-      <button type="submit">Entrar</button>
+      <button class = "login-button" type="submit">Entrar</button>
 
       <span class="register-text">
         Ainda não possui conta?
-        <a href="#">Criar conta</a>
+        <button (click)="openRegisterModal()">Criar conta</button>
       </span>
     </form>
   </div>
 </div>
+
+<app-register-modal
+  *ngIf="registerModalOpen"
+  (close)="closeRegisterModal()">
+</app-register-modal>
