@@ -4,7 +4,6 @@
 
     <div class="logo-text">
       <h2>Cashlyo</h2>
-      <span>Financial System</span>
     </div>
   </div>
 
@@ -15,22 +14,22 @@
       [routerLinkActiveOptions]="{ exact: true }"
       (click)="fecharMenu()"
     >
-      <span>🏠</span>
+      <span>-</span>
       <span class="menu-text">Home</span>
     </a>
 
     <a routerLink="/dashboard/transactions" routerLinkActive="active-link" (click)="fecharMenu()">
-      <span>💸</span>
+      <span>-</span>
       <span class="menu-text">Transações</span>
     </a>
 
     <a routerLink="/dashboard/flow" routerLinkActive="active-link" (click)="fecharMenu()">
-      <span>📈</span>
+      <span>-</span>
       <span class="menu-text">Fluxo</span>
     </a>
 
     <a routerLink="/dashboard/profile" routerLinkActive="active-link" (click)="fecharMenu()">
-      <span>👤</span>
+      <span>-</span>
       <span class="menu-text">Perfil</span>
     </a>
   </nav>

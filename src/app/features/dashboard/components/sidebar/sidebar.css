@@ -19,47 +19,13 @@
   overflow: hidden;
 }
 
-/* BACKGROUND EFFECT */
-
-.sidebar::before {
-  content: '';
-
-  position: absolute;
-
-  width: 300px;
-  height: 300px;
-
-  background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 50%;
-
-  top: -120px;
-  right: -120px;
-}
-
-.sidebar::after {
-  content: '';
-
-  position: absolute;
-
-  width: 220px;
-  height: 220px;
-
-  background: rgba(255, 255, 255, 0.05);
-
-  border-radius: 50%;
-
-  bottom: -100px;
-  left: -80px;
-}
-
 /* LOGO */
 
 .sidebar-logo {
   display: flex;
   align-items: center;
 
-  gap: 14px;
+  gap: 35px;
 
   position: relative;
 
@@ -121,6 +87,8 @@
 
 .sidebar-menu a {
   height: 56px;
+
+  margin: 25px;
 
   padding: 0 18px;
 
