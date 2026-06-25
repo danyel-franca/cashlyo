@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyPipe, NgIf, NgFor } from '@angular/common';
-import { TransactionService } from '../../../../services/transaction';
+import { TransactionService } from '../../../../services/transaction/transaction';
 import { Transaction } from '../../../../core/models/transaction.model';
 
 import {

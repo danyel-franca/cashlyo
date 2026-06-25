@@ -1,0 +1,56 @@
+<div class="login-container">
+  <div class="login-left">
+    <div class="brand-content">
+      <h1>Cashlyo</h1>
+
+      <h2>Controle suas finanças com simplicidade.</h2>
+
+      <p>Gerencie entradas, saídas, contas e fluxo financeiro em um único lugar.</p>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <form class="login-card" [formGroup]="loginForm" (ngSubmit)="entrar()">
+      <div class="login-header">
+        <h2>Entrar</h2>
+        <p>Bem-vindo de volta 👋</p>
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+
+        <input type="email" placeholder="Digite seu email" formControlName="email" />
+
+        <small *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          Email inválido
+        </small>
+      </div>
+
+      <div class="input-group">
+        <label>Senha</label>
+
+        <input type="password" placeholder="Digite sua senha" formControlName="senha" />
+
+        <small class="login-error" *ngIf="erroLogin">
+          {{ erroLogin }}
+        </small>
+
+        <small *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched">
+          A senha deve conter: letra maiúscula, minúscula, número e mínimo 8 caracteres.
+        </small>
+      </div>
+
+      <button class = "login-button" type="submit">Entrar</button>
+
+      <span class="register-text">
+        Ainda não possui conta?
+        <button (click)="openRegisterModal()">Criar conta</button>
+      </span>
+    </form>
+  </div>
+</div>
+
+<app-register-modal
+  *ngIf="registerModalOpen"
+  (close)="closeRegisterModal()">
+</app-register-modal>

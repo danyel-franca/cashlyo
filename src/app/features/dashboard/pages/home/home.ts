@@ -4,7 +4,7 @@ import { FinanceCardComponent } from '../../components/finance-card/finance-card
 import { FinanceChartComponent } from '../../components/finance-chart/finance-chart';
 import { RecentTransactionsComponent } from '../../components/recent-transactions/recent-transactions';
 
-import { TransactionService } from '../../../../services/transaction';
+import { TransactionService } from '../../../../services/transaction/transaction';
 
 import { Transaction } from '../../../../core/models/transaction.model';
 

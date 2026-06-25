@@ -8,7 +8,7 @@ import { TransactionModal } from '../../components/transaction-modal/transaction
 
 import { ConfirmModal } from '../../components/confirm-modal/confirm-modal';
 
-import { TransactionService } from '../../../../services/transaction';
+import { TransactionService } from '../../../../services/transaction/transaction';
 
 import { Transaction } from '../../../../core/models/transaction.model';
 

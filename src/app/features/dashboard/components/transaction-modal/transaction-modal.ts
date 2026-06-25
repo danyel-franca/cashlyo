@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 
 import { Transaction } from '../../../../core/models/transaction.model';
 
-import { CategoryService } from '../../../../services/category';
+import { CategoryService } from '../../../../services/category/category';
 import { BackendCategory } from '../../../../core/models/backend-category.model';
 
 @Component({

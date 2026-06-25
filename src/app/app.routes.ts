@@ -10,7 +10,7 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
-      import('./features/auth/auth-routing-module').then((r) => r.AuthRoutingModule),
+      import('./services/auth/auth-routing-module').then((r) => r.AuthRoutingModule),
   },
 
   {

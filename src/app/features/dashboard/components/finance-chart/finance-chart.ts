@@ -4,7 +4,7 @@ import { ApexChart, ApexNonAxisChartSeries, ApexResponsive } from 'ng-apexcharts
 
 import { NgApexchartsModule } from 'ng-apexcharts';
 
-import { TransactionService } from '../../../../services/transaction';
+import { TransactionService } from '../../../../services/transaction/transaction';
 
 import { Transaction } from '../../../../core/models/transaction.model';
 

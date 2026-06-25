@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import { TransactionService } from '../../../../services/transaction';
+import { TransactionService } from '../../../../services/transaction/transaction';
 
 import { Transaction } from '../../../../core/models/transaction.model';
 
