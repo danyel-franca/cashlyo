@@ -40,7 +40,6 @@ export class TransactionsComponent implements OnInit {
 
   transactions: Transaction[] = [];
 
-
   ngOnInit(): void {
     this.transactionService.transactions$.subscribe((transactions) => {
       this.transactions = transactions;
@@ -57,27 +56,33 @@ export class TransactionsComponent implements OnInit {
     this.editingTransaction = null;
   }
 
-  addTransaction(transaction: Transaction): void {
-    const formattedTransaction: Transaction = {
-      ...transaction,
-
-      id: this.editingTransaction ? this.editingTransaction.id : Date.now(),
+  addTransaction(transaction: any): void {
+    const payload = {
+      descricao: transaction.descricao,
 
       valor: Number(transaction.valor),
 
-      status: 'Concluído',
+      data: transaction.data,
+
+      categoriaId: Number(transaction.categoriaId),
+
+      usuarioId: 2,
+
+      contaId: null,
     };
 
-    if (this.editingTransaction) {
-      this.transactionService.updateTransaction(formattedTransaction).subscribe(() => {
+    console.log('Payload enviado para o backend:', payload);
+
+    this.transactionService.createTransaction(payload).subscribe({
+      next: (response: any) => {
+        console.log('Transação criada no backend:', response);
+
         this.closeModal();
-      });
+      },
 
-      return;
-    }
-
-    this.transactionService.createTransaction(formattedTransaction).subscribe(() => {
-      this.closeModal();
+      error: (error: any) => {
+        console.error('Erro ao criar transação:', error);
+      },
     });
   }
 
