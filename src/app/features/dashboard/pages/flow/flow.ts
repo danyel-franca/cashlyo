@@ -126,7 +126,10 @@ export class Flow implements OnInit {
     transactions.forEach((transaction) => {
       const month = new Date(transaction.data).getMonth();
 
-      const categoryType = this.getCategoryType(transaction.categoriaId, categories);
+      const categoryType = this.categoryService.getCategoryType(
+        transaction.categoriaId,
+        categories,
+      );
 
       if (categoryType === 'entrada') {
         incomeByMonth[month] += transaction.valor;
@@ -137,13 +140,13 @@ export class Flow implements OnInit {
 
     this.totalIncome = transactions
       .filter(
-        (transaction) => this.getCategoryType(transaction.categoriaId, categories) === 'entrada',
+        (transaction) => this.categoryService.getCategoryType(transaction.categoriaId, categories) === 'entrada',
       )
       .reduce((sum, transaction) => sum + transaction.valor, 0);
 
     this.totalExpense = transactions
       .filter(
-        (transaction) => this.getCategoryType(transaction.categoriaId, categories) === 'saida',
+        (transaction) => this.categoryService.getCategoryType(transaction.categoriaId, categories) === 'saida',
       )
       .reduce((sum, transaction) => sum + transaction.valor, 0);
 
@@ -163,11 +166,5 @@ export class Flow implements OnInit {
     this.chartXAxis = {
       categories: months,
     };
-  }
-
-  private getCategoryType(categoriaId: number, categories: BackendCategory[]): 'entrada' | 'saida' {
-    const category = categories.find((category) => category.id === categoriaId);
-
-    return category?.tipo || 'saida';
   }
 }

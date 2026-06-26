@@ -43,8 +43,6 @@ export class RecentTransactionsComponent implements OnInit {
   }
 
   getCategoryType(categoriaId: number): 'entrada' | 'saida' {
-    const category = this.categories.find((category) => category.id === categoriaId);
-
-    return category?.tipo || 'saida';
+    return this.categoryService.getCategoryType(categoriaId, this.categories);
   }
 }

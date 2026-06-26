@@ -59,19 +59,21 @@ export class Home implements OnInit {
 
   private calculateFinancialSummary(transactions: BackendTransaction[]): void {
     this.totalIncome = transactions
-      .filter((transaction) => this.getCategoryType(transaction.categoriaId) === 'entrada')
+      .filter(
+        (transaction) =>
+          this.categoryService.getCategoryType(transaction.categoriaId, this.categories) ===
+          'entrada',
+      )
       .reduce((total, transaction) => total + transaction.valor, 0);
 
     this.totalExpense = transactions
-      .filter((transaction) => this.getCategoryType(transaction.categoriaId) === 'saida')
+      .filter(
+        (transaction) =>
+          this.categoryService.getCategoryType(transaction.categoriaId, this.categories) ===
+          'saida',
+      )
       .reduce((total, transaction) => total + transaction.valor, 0);
 
     this.balance = this.totalIncome - this.totalExpense;
-  }
-
-  private getCategoryType(categoriaId: number): 'entrada' | 'saida' {
-    const category = this.categories.find((category) => category.id === categoriaId);
-
-    return category?.tipo || 'saida';
   }
 }

@@ -1,5 +1,4 @@
 <div class="profile-page">
-
   <div class="profile-header">
     <h1>Meu Perfil</h1>
 
@@ -7,35 +6,26 @@
   </div>
 
   <div class="profile-card">
-
     <div class="profile-avatar">
+      <div class="avatar">{{ user?.nome?.charAt(0) }}{{ user?.nome?.split(' ')?.[1]?.charAt(0) || '' }}</div>
 
-      <div class="avatar">
-        DF
-      </div>
+      <button class="change-photo-btn">Alterar Foto</button>
 
-      <button class="change-photo-btn">
-        Alterar Foto
-      </button>
-
-      <h2>Danyel França</h2>
-
-      <p>danyel@email.com</p>
-
+      <h2>{{ user?.nome }}</h2>
+      <p>{{ user?.email }}</p>
     </div>
 
     <div class="profile-form">
-
       <div class="form-group">
         <label>Nome Completo</label>
 
-        <input type="text" placeholder="Digite seu nome" />
+        <input type="text" [value]="user?.nome" placeholder="Digite seu nome" />
       </div>
 
       <div class="form-group">
         <label>Email</label>
 
-        <input type="email" placeholder="Digite seu email" />
+        <input type="email" [value]="user?.email" placeholder="Digite seu email" />
       </div>
 
       <div class="form-group">
@@ -56,12 +46,7 @@
         <strong>Ativo</strong>
       </div>
 
-      <button type="button">
-        Salvar Alterações
-      </button>
-
+      <button type="button">Salvar Alterações</button>
     </div>
-
   </div>
-
 </div>

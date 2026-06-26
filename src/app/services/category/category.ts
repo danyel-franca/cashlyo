@@ -17,4 +17,16 @@ export class CategoryService {
   getCategories(): Observable<BackendCategory[]> {
     return this.http.get<BackendCategory[]>(this.API_URL);
   }
+
+  getCategoryType(categoriaId: number, categories: BackendCategory[]): 'entrada' | 'saida' {
+    const category = categories.find((category) => category.id === categoriaId);
+
+    return category?.tipo || 'saida';
+  }
+
+  getCategoryName(categoriaId: number, categories: BackendCategory[]): string {
+    const category = categories.find((category) => category.id === categoriaId);
+
+    return category?.nome || '';
+  }
 }

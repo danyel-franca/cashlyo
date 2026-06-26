@@ -10,8 +10,6 @@ import { ConfirmModal } from '../../components/confirm-modal/confirm-modal';
 
 import { TransactionService } from '../../../../services/transaction/transaction';
 
-import { Transaction } from '../../../../core/models/transaction.model';
-
 import { BackendTransaction } from '../../../../core/models/backend-transaction.model';
 
 import { BackendCategory } from '../../../../core/models/backend-category.model';
@@ -51,33 +49,13 @@ export class TransactionsComponent implements OnInit {
   categories: BackendCategory[] = [];
 
   ngOnInit(): void {
-    this.transactionService.getBackendTransactions().subscribe({
-      next: (transactions) => {
-        console.log('Transações do backend:', transactions);
-
-        this.transactions = transactions as BackendTransaction[];
-      },
-
-      error: (error) => {
-        console.error('Erro ao buscar transações:', error);
-      },
-    });
-
-    this.categoryService.getCategories().subscribe({
-      next: (categories) => {
-        this.categories = categories;
-      },
-      error: (error) => {
-        console.error('Erro ao buscar categorias:', error);
-      },
-    });
-
     this.loadTransactions();
 
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
       },
+
       error: (error: any) => {
         console.error('Erro ao buscar categorias:', error);
       },
@@ -168,9 +146,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   getTransactionType(transaction: BackendTransaction): 'entrada' | 'saida' {
-    const category = this.categories.find((category) => category.id === transaction.categoriaId);
-
-    return category?.tipo || 'saida';
+    return this.categoryService.getCategoryType(transaction.categoriaId, this.categories);
   }
 
   loadTransactions(): void {
