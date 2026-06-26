@@ -16,6 +16,7 @@ import { Transaction } from '../../../../core/models/transaction.model';
 
 import { CategoryService } from '../../../../services/category/category';
 import { BackendCategory } from '../../../../core/models/backend-category.model';
+import { BackendTransaction } from '../../../../core/models/backend-transaction.model';
 
 @Component({
   selector: 'app-transaction-modal',
@@ -34,7 +35,7 @@ export class TransactionModal implements OnChanges, OnInit {
   save = new EventEmitter<Transaction>();
 
   @Input()
-  transactionData: Transaction | null = null;
+  transactionData: BackendTransaction | null = null;
 
   newTransaction = {
     descricao: '',
@@ -81,21 +82,21 @@ export class TransactionModal implements OnChanges, OnInit {
     this.close.emit();
   }
 
-saveTransaction(): void {
-  console.log('Transação para salvar:', this.newTransaction);
+  saveTransaction(): void {
+    console.log('Transação para salvar:', this.newTransaction);
 
-  this.save.emit(this.newTransaction as any);
+    this.save.emit(this.newTransaction as any);
 
-  this.closeModal();
-}
+    this.closeModal();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactionData'] && this.transactionData) {
       this.newTransaction = {
         descricao: this.transactionData.descricao,
         valor: this.transactionData.valor,
-        tipo: this.transactionData.tipo,
-        categoriaId: 0,
+        tipo: 'entrada',
+        categoriaId: this.transactionData.categoriaId,
         data: this.transactionData.data,
       };
     }

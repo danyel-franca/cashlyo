@@ -39,33 +39,23 @@ export class TransactionService {
     return this.transactionsSubject.value;
   }
 
-  createTransaction(
-    transaction: CreateBackendTransaction
-  ): Observable<BackendTransaction> {
-    return this.http.post<BackendTransaction>(
-      this.API_URL,
-      transaction
-    );
+  createTransaction(transaction: CreateBackendTransaction): Observable<BackendTransaction> {
+    return this.http.post<BackendTransaction>(this.API_URL, transaction);
   }
 
-  updateTransaction(transaction: Transaction): Observable<Transaction> {
-    const updatedTransactions = this.getTransactions().map((currentTransaction) =>
-      currentTransaction.id === transaction.id ? transaction : currentTransaction,
-    );
+  getBackendTransactions(): Observable<BackendTransaction[]> {
+    return this.http.get<BackendTransaction[]>(this.API_URL);
+  }
 
-    this.saveTransactions(updatedTransactions);
-
-    return of(transaction);
+  updateTransaction(
+    id: number,
+    transaction: CreateBackendTransaction,
+  ): Observable<BackendTransaction> {
+    return this.http.put<BackendTransaction>(`${this.API_URL}/${id}`, transaction);
   }
 
   deleteTransaction(id: number): Observable<void> {
-    const updatedTransactions = this.getTransactions().filter(
-      (transaction) => transaction.id !== id,
-    );
-
-    this.saveTransactions(updatedTransactions);
-
-    return of(void 0);
+    return this.http.delete<void>(`${this.API_URL}/${id}`);
   }
 
   refreshTransactions(transactions: Transaction[]): void {

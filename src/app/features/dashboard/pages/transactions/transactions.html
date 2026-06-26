@@ -10,11 +10,15 @@
   </div>
 
   <div class="transactions-actions">
-
     <div class="search-box">
       <span>🔍</span>
 
-      <input type="text" class = "barra" placeholder="Pesquisar transações..." [(ngModel)]="searchTerm" />
+      <input
+        type="text"
+        class="barra"
+        placeholder="Pesquisar transações..."
+        [(ngModel)]="searchTerm"
+      />
     </div>
 
     <div class="filters">
@@ -33,31 +37,24 @@
       <thead>
         <tr>
           <th>Tipo</th>
-
           <th>Descrição</th>
-
           <th>Categoria</th>
-
           <th>Valor</th>
-
           <th>Data</th>
-
           <th>Status</th>
-
           <th>Ações</th>
         </tr>
       </thead>
 
       <tbody>
         <tr *ngFor="let transaction of filteredTransactions">
-
           <td>
-            <div class="type-badge" [ngClass]="transaction.tipo">
-              <span *ngIf="transaction.tipo === 'entrada'"> 📈 </span>
+            <div class="type-badge" [ngClass]="getTransactionType(transaction)">
+              <span *ngIf="getTransactionType(transaction) === 'entrada'"> 📈 </span>
 
-              <span *ngIf="transaction.tipo === 'saida'"> 📉 </span>
+              <span *ngIf="getTransactionType(transaction) === 'saida'"> 📉 </span>
 
-              {{ transaction.tipo }}
+              {{ getTransactionType(transaction) }}
             </div>
           </td>
 
@@ -66,17 +63,17 @@
           </td>
 
           <td>
-            {{ transaction.categoria }}
+            {{ transaction.categoriaNome }}
           </td>
 
           <td
             class="transaction-value"
             [ngClass]="{
-              income: transaction.tipo === 'entrada',
-              expense: transaction.tipo === 'saida',
+              income: getTransactionType(transaction) === 'entrada',
+              expense: getTransactionType(transaction) === 'saida',
             }"
           >
-            {{ transaction.tipo === 'entrada' ? '+' : '-' }}
+            {{ getTransactionType(transaction) === 'entrada' ? '+' : '-' }}
 
             {{ transaction.valor | currency: 'BRL' : 'symbol' : '1.2-2' }}
           </td>
@@ -86,16 +83,18 @@
           </td>
 
           <td>
-            <span class="status-badge" [ngClass]="transaction.status.toLowerCase()">
-              {{ transaction.status }}
-            </span>
+            <span class="status-badge concluído"> Concluído </span>
           </td>
 
           <td>
             <div class="actions">
-              <button class="edit-button" (click)="editTransaction(transaction)">✏️</button>
+              <button class="edit-button" type="button" (click)="editTransaction(transaction)">
+                ✏️
+              </button>
 
-              <button class="delete-button" (click)="deleteTransaction(transaction)">🗑️</button>
+              <button class="delete-button" type="button" (click)="deleteTransaction(transaction)">
+                🗑️
+              </button>
             </div>
           </td>
         </tr>
@@ -116,5 +115,6 @@
   *ngIf="isConfirmModalOpen"
   [transactionName]="transactionToDelete?.descricao || ''"
   (close)="closeConfirmModal()"
+  (confirm)="confirmDelete()"
 >
 </app-confirm-modal>

@@ -15,15 +15,15 @@
         </h3>
 
         <p>
-          {{ transaction.categoria }}
+          {{ transaction.categoriaNome }}
         </p>
       </div>
 
       <div class="right">
         <span
           [ngClass]="{
-            income: transaction.tipo === 'entrada',
-            expense: transaction.tipo === 'saida',
+            income: getCategoryType(transaction.categoriaId) === 'entrada',
+            expense: getCategoryType(transaction.categoriaId) === 'saida',
           }"
         >
           {{ transaction.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}

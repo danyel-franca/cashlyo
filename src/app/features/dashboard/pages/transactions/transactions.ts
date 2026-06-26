@@ -12,6 +12,11 @@ import { TransactionService } from '../../../../services/transaction/transaction
 
 import { Transaction } from '../../../../core/models/transaction.model';
 
+import { BackendTransaction } from '../../../../core/models/backend-transaction.model';
+
+import { BackendCategory } from '../../../../core/models/backend-category.model';
+import { CategoryService } from '../../../../services/category/category';
+
 @Component({
   selector: 'app-transactions',
 
@@ -24,7 +29,10 @@ import { Transaction } from '../../../../core/models/transaction.model';
   styleUrl: './transactions.css',
 })
 export class TransactionsComponent implements OnInit {
-  constructor(private transactionService: TransactionService) {}
+  constructor(
+    private transactionService: TransactionService,
+    private categoryService: CategoryService,
+  ) {}
 
   isModalOpen = false;
 
@@ -34,15 +42,45 @@ export class TransactionsComponent implements OnInit {
 
   selectedFilter = 'Todos';
 
-  editingTransaction: Transaction | null = null;
+  editingTransaction: BackendTransaction | null = null;
 
-  transactionToDelete: Transaction | null = null;
+  transactionToDelete: BackendTransaction | null = null;
 
-  transactions: Transaction[] = [];
+  transactions: BackendTransaction[] = [];
+
+  categories: BackendCategory[] = [];
 
   ngOnInit(): void {
-    this.transactionService.transactions$.subscribe((transactions) => {
-      this.transactions = transactions;
+    this.transactionService.getBackendTransactions().subscribe({
+      next: (transactions) => {
+        console.log('Transações do backend:', transactions);
+
+        this.transactions = transactions as BackendTransaction[];
+      },
+
+      error: (error) => {
+        console.error('Erro ao buscar transações:', error);
+      },
+    });
+
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (error) => {
+        console.error('Erro ao buscar categorias:', error);
+      },
+    });
+
+    this.loadTransactions();
+
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (error: any) => {
+        console.error('Erro ao buscar categorias:', error);
+      },
     });
   }
 
@@ -59,40 +97,45 @@ export class TransactionsComponent implements OnInit {
   addTransaction(transaction: any): void {
     const payload = {
       descricao: transaction.descricao,
-
       valor: Number(transaction.valor),
-
       data: transaction.data,
-
       categoriaId: Number(transaction.categoriaId),
-
       usuarioId: 2,
-
       contaId: null,
     };
 
-    console.log('Payload enviado para o backend:', payload);
+    if (this.editingTransaction) {
+      this.transactionService.updateTransaction(this.editingTransaction.id, payload).subscribe({
+        next: () => {
+          this.loadTransactions();
+          this.closeModal();
+        },
+        error: (error: any) => {
+          console.error('Erro ao atualizar transação:', error);
+        },
+      });
+
+      return;
+    }
 
     this.transactionService.createTransaction(payload).subscribe({
-      next: (response: any) => {
-        console.log('Transação criada no backend:', response);
-
+      next: () => {
+        this.loadTransactions();
         this.closeModal();
       },
-
       error: (error: any) => {
         console.error('Erro ao criar transação:', error);
       },
     });
   }
 
-  editTransaction(transaction: Transaction): void {
+  editTransaction(transaction: BackendTransaction): void {
     this.editingTransaction = transaction;
 
     this.isModalOpen = true;
   }
 
-  deleteTransaction(transaction: Transaction): void {
+  deleteTransaction(transaction: BackendTransaction): void {
     this.transactionToDelete = transaction;
 
     this.isConfirmModalOpen = true;
@@ -103,8 +146,18 @@ export class TransactionsComponent implements OnInit {
       return;
     }
 
-    this.transactionService.deleteTransaction(this.transactionToDelete.id).subscribe(() => {
-      this.closeConfirmModal();
+    this.transactionService.deleteTransaction(this.transactionToDelete.id).subscribe({
+      next: () => {
+        this.transactions = this.transactions.filter(
+          (transaction) => transaction.id !== this.transactionToDelete?.id,
+        );
+
+        this.closeConfirmModal();
+      },
+
+      error: (error: any) => {
+        console.error('Erro ao excluir transação:', error);
+      },
     });
   }
 
@@ -114,14 +167,32 @@ export class TransactionsComponent implements OnInit {
     this.transactionToDelete = null;
   }
 
-  get filteredTransactions(): Transaction[] {
+  getTransactionType(transaction: BackendTransaction): 'entrada' | 'saida' {
+    const category = this.categories.find((category) => category.id === transaction.categoriaId);
+
+    return category?.tipo || 'saida';
+  }
+
+  loadTransactions(): void {
+    this.transactionService.getBackendTransactions().subscribe({
+      next: (transactions) => {
+        this.transactions = transactions;
+      },
+      error: (error: any) => {
+        console.error('Erro ao buscar transações:', error);
+      },
+    });
+  }
+
+  get filteredTransactions(): BackendTransaction[] {
     return this.transactions.filter((transaction) => {
       const matchesSearch = transaction.descricao
         .toLowerCase()
         .includes(this.searchTerm.toLowerCase());
 
       const matchesFilter =
-        this.selectedFilter === 'Todos' || transaction.tipo === this.selectedFilter.toLowerCase();
+        this.selectedFilter === 'Todos' ||
+        this.getTransactionType(transaction) === this.selectedFilter;
 
       return matchesSearch && matchesFilter;
     });

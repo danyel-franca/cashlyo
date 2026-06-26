@@ -6,21 +6,24 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { TransactionService } from '../../../../services/transaction/transaction';
 
-import { Transaction } from '../../../../core/models/transaction.model';
+import { CategoryService } from '../../../../services/category/category';
+
+import { BackendTransaction } from '../../../../core/models/backend-transaction.model';
+
+import { BackendCategory } from '../../../../core/models/backend-category.model';
 
 @Component({
   selector: 'app-finance-chart',
-
   standalone: true,
-
   imports: [NgApexchartsModule],
-
   templateUrl: './finance-chart.html',
-
   styleUrls: ['./finance-chart.css'],
 })
 export class FinanceChartComponent implements OnInit {
-  constructor(private transactionService: TransactionService) {}
+  constructor(
+    private transactionService: TransactionService,
+    private categoryService: CategoryService,
+  ) {}
 
   public chartSeries: ApexNonAxisChartSeries = [];
 
@@ -28,9 +31,7 @@ export class FinanceChartComponent implements OnInit {
 
   public chartDetails: ApexChart = {
     type: 'donut',
-
     height: 280,
-
     toolbar: {
       show: false,
     },
@@ -41,12 +42,10 @@ export class FinanceChartComponent implements OnInit {
   public chartResponsive: ApexResponsive[] = [
     {
       breakpoint: 768,
-
       options: {
         chart: {
           height: 220,
         },
-
         legend: {
           position: 'bottom',
         },
@@ -58,21 +57,49 @@ export class FinanceChartComponent implements OnInit {
 
   totalExpense = 0;
 
+  categories: BackendCategory[] = [];
+
   ngOnInit(): void {
-    this.transactionService.transactions$.subscribe((transactions) => {
-      this.calculateChartData(transactions);
+    this.loadChartData();
+  }
+
+  private loadChartData(): void {
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+
+        this.transactionService.getBackendTransactions().subscribe({
+          next: (transactions) => {
+            this.calculateChartData(transactions);
+          },
+
+          error: (error: any) => {
+            console.error('Erro ao buscar transações:', error);
+          },
+        });
+      },
+
+      error: (error: any) => {
+        console.error('Erro ao buscar categorias:', error);
+      },
     });
   }
 
-  calculateChartData(transactions: Transaction[]): void {
+  private calculateChartData(transactions: BackendTransaction[]): void {
     this.totalIncome = transactions
-      .filter((transaction) => transaction.tipo === 'entrada')
+      .filter((transaction) => this.getCategoryType(transaction.categoriaId) === 'entrada')
       .reduce((total, transaction) => total + transaction.valor, 0);
 
     this.totalExpense = transactions
-      .filter((transaction) => transaction.tipo === 'saida')
+      .filter((transaction) => this.getCategoryType(transaction.categoriaId) === 'saida')
       .reduce((total, transaction) => total + transaction.valor, 0);
 
     this.chartSeries = [this.totalIncome, this.totalExpense];
+  }
+
+  private getCategoryType(categoriaId: number): 'entrada' | 'saida' {
+    const category = this.categories.find((category) => category.id === categoriaId);
+
+    return category?.tipo || 'saida';
   }
 }
