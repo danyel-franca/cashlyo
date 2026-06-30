@@ -9,14 +9,13 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-
 import { FormsModule } from '@angular/forms';
-
-import { Transaction } from '../../../../core/models/transaction.model';
-
 import { CategoryService } from '../../../../services/category/category';
 import { BackendCategory } from '../../../../core/models/backend-category.model';
-import { BackendTransaction } from '../../../../core/models/backend-transaction.model';
+import {
+  BackendTransaction,
+  CreateBackendTransaction,
+} from '../../../../core/models/backend-transaction.model';
 
 @Component({
   selector: 'app-transaction-modal',
@@ -32,7 +31,7 @@ export class TransactionModal implements OnChanges, OnInit {
   close = new EventEmitter<void>();
 
   @Output()
-  save = new EventEmitter<Transaction>();
+  save = new EventEmitter<CreateBackendTransaction>();
 
   @Input()
   transactionData: BackendTransaction | null = null;
@@ -47,47 +46,16 @@ export class TransactionModal implements OnChanges, OnInit {
 
   categories: BackendCategory[] = [];
 
-  readonly incomeCategories = ['Trabalho', 'Investimentos', 'Freelance', 'Salário', 'Vendas'];
-
-  readonly expenseCategories = [
-    'Alimentação',
-    'Transporte',
-    'Saúde',
-    'Lazer',
-    'Educação',
-    'Moradia',
-  ];
-
   get filteredCategories(): BackendCategory[] {
     return this.categories.filter((category) => category.tipo === this.newTransaction.tipo);
   }
 
   ngOnInit(): void {
-    console.log('Modal de transação abriu');
-
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
-
-        console.log('Categorias vindas do backend:', categories);
-      },
-
-      error: (error) => {
-        console.error('Erro ao buscar categorias:', error);
       },
     });
-  }
-
-  closeModal(): void {
-    this.close.emit();
-  }
-
-  saveTransaction(): void {
-    console.log('Transação para salvar:', this.newTransaction);
-
-    this.save.emit(this.newTransaction as any);
-
-    this.closeModal();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -100,5 +68,24 @@ export class TransactionModal implements OnChanges, OnInit {
         data: this.transactionData.data,
       };
     }
+  }
+
+  closeModal(): void {
+    this.close.emit();
+  }
+
+  saveTransaction(): void {
+    const transaction: CreateBackendTransaction = {
+      descricao: this.newTransaction.descricao,
+      valor: Number(this.newTransaction.valor),
+      data: this.newTransaction.data,
+      categoriaId: Number(this.newTransaction.categoriaId),
+      usuarioId: Number(localStorage.getItem('userId')),
+      contaId: null,
+    };
+
+    this.save.emit(transaction);
+
+    this.closeModal();
   }
 }

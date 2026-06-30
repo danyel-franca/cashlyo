@@ -47,7 +47,6 @@ export class RegisterModal {
     const { nome, email, senha, confirmarSenha } = this.registerForm.value;
 
     if (senha !== confirmarSenha) {
-      alert('As senhas não coincidem');
 
       return;
     }
@@ -62,18 +61,8 @@ export class RegisterModal {
     };
 
     this.authService.register(payload).subscribe({
-      next: (user) => {
-        console.log('Usuário criado:', user);
-
-        alert('Conta criada com sucesso!');
-
+      next: () => {
         this.close.emit();
-      },
-
-      error: (error: any) => {
-        console.error('Erro ao criar usuário:', error);
-
-        alert('Erro ao criar conta.');
       },
     });
   }

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,6 +9,7 @@ import { RouterLink, RouterModule } from '@angular/router';
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
+  constructor(private router: Router) {}
 
   @Input()
   isOpen = false;
@@ -20,4 +21,11 @@ export class Sidebar {
     this.linkClick.emit();
   }
 
+  logout(): void {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userEmail');
+
+    this.router.navigate(['/auth/login']);
+  }
 }

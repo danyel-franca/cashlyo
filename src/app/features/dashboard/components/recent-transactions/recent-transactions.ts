@@ -31,7 +31,7 @@ export class RecentTransactionsComponent implements OnInit {
       next: (categories) => {
         this.categories = categories;
 
-        this.transactionService.getBackendTransactions().subscribe({
+        this.transactionService.getCurrentUserTransactions().subscribe({
           next: (transactions) => {
             this.recentTransactions = transactions
               .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())

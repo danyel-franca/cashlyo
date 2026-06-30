@@ -83,7 +83,7 @@ export class Flow implements OnInit {
   private loadFlowData(): void {
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
-        this.transactionService.getBackendTransactions().subscribe({
+        this.transactionService.getCurrentUserTransactions().subscribe({
           next: (transactions) => {
             this.generateChartData(transactions, categories);
           },

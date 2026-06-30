@@ -10,7 +10,7 @@ import { ConfirmModal } from '../../components/confirm-modal/confirm-modal';
 
 import { TransactionService } from '../../../../services/transaction/transaction';
 
-import { BackendTransaction } from '../../../../core/models/backend-transaction.model';
+import { BackendTransaction, CreateBackendTransaction } from '../../../../core/models/backend-transaction.model';
 
 import { BackendCategory } from '../../../../core/models/backend-category.model';
 import { CategoryService } from '../../../../services/category/category';
@@ -55,10 +55,6 @@ export class TransactionsComponent implements OnInit {
       next: (categories) => {
         this.categories = categories;
       },
-
-      error: (error: any) => {
-        console.error('Erro ao buscar categorias:', error);
-      },
     });
   }
 
@@ -72,13 +68,13 @@ export class TransactionsComponent implements OnInit {
     this.editingTransaction = null;
   }
 
-  addTransaction(transaction: any): void {
+  addTransaction(transaction: CreateBackendTransaction): void {
     const payload = {
       descricao: transaction.descricao,
-      valor: Number(transaction.valor),
+      valor: transaction.valor,
       data: transaction.data,
-      categoriaId: Number(transaction.categoriaId),
-      usuarioId: 2,
+      categoriaId: transaction.categoriaId,
+      usuarioId: Number(localStorage.getItem('userId')),
       contaId: null,
     };
 
@@ -87,9 +83,6 @@ export class TransactionsComponent implements OnInit {
         next: () => {
           this.loadTransactions();
           this.closeModal();
-        },
-        error: (error: any) => {
-          console.error('Erro ao atualizar transação:', error);
         },
       });
 
@@ -100,9 +93,6 @@ export class TransactionsComponent implements OnInit {
       next: () => {
         this.loadTransactions();
         this.closeModal();
-      },
-      error: (error: any) => {
-        console.error('Erro ao criar transação:', error);
       },
     });
   }
@@ -131,11 +121,7 @@ export class TransactionsComponent implements OnInit {
         );
 
         this.closeConfirmModal();
-      },
-
-      error: (error: any) => {
-        console.error('Erro ao excluir transação:', error);
-      },
+      }
     });
   }
 
@@ -150,12 +136,9 @@ export class TransactionsComponent implements OnInit {
   }
 
   loadTransactions(): void {
-    this.transactionService.getBackendTransactions().subscribe({
+    this.transactionService.getCurrentUserTransactions().subscribe({
       next: (transactions) => {
         this.transactions = transactions;
-      },
-      error: (error: any) => {
-        console.error('Erro ao buscar transações:', error);
       },
     });
   }

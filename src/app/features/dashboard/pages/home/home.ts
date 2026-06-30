@@ -40,7 +40,7 @@ export class Home implements OnInit {
       next: (categories) => {
         this.categories = categories;
 
-        this.transactionService.getBackendTransactions().subscribe({
+        this.transactionService.getCurrentUserTransactions().subscribe({
           next: (transactions) => {
             this.calculateFinancialSummary(transactions);
           },

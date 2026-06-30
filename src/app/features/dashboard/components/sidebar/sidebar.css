@@ -78,6 +78,8 @@
 
   gap: 10px;
 
+  flex: 1;
+
   margin-top: 70px;
 
   position: relative;
@@ -205,4 +207,46 @@
 
     justify-content: flex-start;
   }
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logout-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 16px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: transparent;
+  color: #cbd5e1;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.logout-button:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  transform: translateX(4px);
+}
+
+.logout-button span:first-child {
+  font-size: 18px;
+}
+
+.logout-button:active {
+  transform: scale(0.98);
 }
