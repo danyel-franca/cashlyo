@@ -11,14 +11,15 @@
   </div>
 
   <div class="header-right">
-
-    <div class="user-card">
+    <div class="user-card" (click)="goToProfile()">
       <div class="user-text">
-        <strong>Usuário</strong>
-        <span>Perfil</span>
+        <strong>{{ userName }}</strong>
+        <span>{{ userEmail }}</span>
       </div>
 
-      <div class="avatar">U</div>
+      <div class="avatar">
+        {{ initials }}
+      </div>
     </div>
   </div>
 </div>
