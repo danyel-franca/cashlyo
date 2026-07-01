@@ -14,8 +14,6 @@
       <button class="change-photo-btn">Alterar Foto</button>
 
       <h2>{{ user?.nome }}</h2>
-
-      <p>{{ user?.email }}</p>
     </div>
 
     <div class="profile-form">
@@ -34,21 +32,24 @@
       <div class="form-group">
         <label>Nova Senha</label>
 
-        <input type="password" [(ngModel)]="formData.senha" placeholder="Digite uma nova senha" />
+        <input
+          #senha="ngModel"
+          type="password"
+          [(ngModel)]="formData.senha"
+          name="senha"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+          placeholder="Digite uma nova senha"
+        />
+
+        <small *ngIf="senha.invalid && senha.touched" class="error-message">
+          A senha deve conter: letra maiúscula, minúscula, número e mínimo 8 caracteres.
+        </small>
       </div>
 
       <div class="form-group">
         <label>Confirmar Senha</label>
 
         <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirme a senha" />
-      </div>
-
-      <div class="status-badge">
-        <span>Status:</span>
-
-        <strong>
-          {{ user?.status ? 'Ativo' : 'Inativo' }}
-        </strong>
       </div>
 
       <button type="button" (click)="saveProfile()">Salvar Alterações</button>

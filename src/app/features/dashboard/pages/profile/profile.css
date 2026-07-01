@@ -185,6 +185,13 @@
     0 12px 24px rgba(79, 70, 229, 0.25);
 }
 
+.error-message {
+  display: block;
+  margin-top: 6px;
+  color: #ef4444;
+  font-size: 13px;
+}
+
 /* Responsividade */
 
 @media (max-width: 900px) {
