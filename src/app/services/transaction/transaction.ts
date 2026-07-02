@@ -12,6 +12,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
+
 export class TransactionService {
   private readonly API_URL = 'http://10.136.38.50:4000/api/transacoes';
 

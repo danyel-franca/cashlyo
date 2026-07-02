@@ -87,15 +87,7 @@ export class Flow implements OnInit {
           next: (transactions) => {
             this.generateChartData(transactions, categories);
           },
-
-          error: (error: any) => {
-            console.error('Erro ao buscar transações:', error);
-          },
         });
-      },
-
-      error: (error: any) => {
-        console.error('Erro ao buscar categorias:', error);
       },
     });
   }

@@ -72,15 +72,7 @@ export class FinanceChartComponent implements OnInit {
           next: (transactions) => {
             this.calculateChartData(transactions);
           },
-
-          error: (error: any) => {
-            console.error('Erro ao buscar transações:', error);
-          },
         });
-      },
-
-      error: (error: any) => {
-        console.error('Erro ao buscar categorias:', error);
       },
     });
   }

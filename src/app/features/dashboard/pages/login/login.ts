@@ -47,10 +47,6 @@ export class Login implements OnInit {
 
         this.erroLogin = 'Email ou senha incorretos';
       },
-
-      error: () => {
-        this.erroLogin = 'Erro ao realizar login';
-      },
     });
   }
 

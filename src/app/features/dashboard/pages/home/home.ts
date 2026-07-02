@@ -44,15 +44,7 @@ export class Home implements OnInit {
           next: (transactions) => {
             this.calculateFinancialSummary(transactions);
           },
-
-          error: (error: any) => {
-            console.error('Erro ao buscar transações:', error);
-          },
         });
-      },
-
-      error: (error: any) => {
-        console.error('Erro ao buscar categorias:', error);
       },
     });
   }
